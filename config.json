@@ -1,0 +1,11 @@
+{
+  "settings": {
+    "prefix": "p!"
+  },
+  "colours": {
+    "success": "#00ff00",
+    "warn": "#ff0000",
+    "other": "#666666",
+    "gold": "#fcba03"
+  }
+}
