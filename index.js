@@ -14,9 +14,11 @@
 // limitations under the License.
 //
 
-const fs = require("fs");
-const Discord = require("discord.js");
+const fs = require('fs');
+const Discord = require('discord.js');
 const client = new Discord.Client();
+const { ErelaClient, Utils } = require("erela.js");
+const { nodes } = require("./config.json");
 
 const commandFiles = fs
   .readdirSync("./Commands")
@@ -31,6 +33,25 @@ client.on("ready", () => {
     client.commands.set(command.name, command);
     console.log(`Loaded ./Commands/${file}`);
   }
+
+  client.music = new ErelaClient(client, nodes)
+    .on("nodeError", console.log)
+    .on("nodeConnect", () => console.log("Successfully created a new node."))
+    .on("queueEnd", (player) => {
+      player.textChannel.send("Queue has ended");
+      return bot.music.players.destroy(player.guild.id);
+    })
+    .on("trackStart", ({ textChannel }, { title, duration }) =>
+      textChannel.send(
+        `Now playing: **${title}** \`${Utils.formatTime(duration, true)}\``
+      )
+    );
+
+  client.levels = new Map()
+    .set("none", 0.0)
+    .set("low", 0.1)
+    .set("medium", 0.15)
+    .set("high", 0.25);
 
   console.log("Bot Ready.");
 });
@@ -67,7 +88,9 @@ client.on("message", (message) => {
   }
 
   if (
-    !message.guild.members.get(client.user.id).hasPermissions(checkcmd.needperms)
+    !message.guild.members
+      .get(client.user.id)
+      .hasPermissions(checkcmd.needperms)
   ) {
     const embed = new Discord.RichEmbed()
       .setColor(require("./config.json").colours.warning)

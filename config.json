@@ -7,5 +7,11 @@
     "warn": "#ff0000",
     "other": "#666666",
     "gold": "#fcba03"
+  },
+
+  "nodes": {
+    "host": "localhost",
+    "port": 2333,
+    "password": "youshallnotpass"
   }
 }
