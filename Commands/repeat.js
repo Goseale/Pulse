@@ -37,15 +37,12 @@ module.exports = {
       return message.channel.send(
         "You need to be in a voice channel to repeat music."
       );
-    if (
-      !args[0] &&
-      (!args[0].toLowerCase() == "track" && !args[0].toLowerCase() == "queue")
-    )
+    if (args[0].toLowerCase() != "track" && args[0].toLowerCase() != "queue")
       return message.channel.send(
         "Please specify either `track` or `queue` to get repeated."
       );
 
-    if (args[1]) result = args[1] == 'on';
+    if (args[1]) result = args[1] == "on";
 
     if (args[0].toLowerCase() == "track") {
       if (!args[1]) {
@@ -62,7 +59,11 @@ module.exports = {
     }
 
     return message.channel.send(
-      `Player is now ${args[0].toLowerCase() == 'track' ? `${player.trackRepeat ? `repeating` : `not repeating`}` : `${player.queueRepeat ? `repeating` : `not repeating`}`} the ${args[0].toLowerCase()}.`
+      `Player is now ${
+        args[0].toLowerCase() == "track"
+          ? `${player.trackRepeat ? `repeating` : `not repeating`}`
+          : `${player.queueRepeat ? `repeating` : `not repeating`}`
+      } the ${args[0].toLowerCase()}.`
     );
   },
 };
