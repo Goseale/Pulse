@@ -67,7 +67,7 @@ client.on("ready", () => {
     .set("high", 0.25);
 
   client.user.setActivity(
-    `to sick beats. | ${require("./config.json").settings.prefix}help`,
+    `sick beats. | ${require("./config.json").settings.prefix}help`,
     { type: "LISTENING" }
   );
 
