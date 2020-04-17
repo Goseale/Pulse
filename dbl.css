@@ -232,7 +232,6 @@ code:hover {
   padding-right: 5px;
   content: UPVOTES;
   transition: all 0.8s;
-  black-space: pre;
   border-radius: 5px;
 }
 .btn-like {

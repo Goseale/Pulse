@@ -19,6 +19,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const { ErelaClient, Utils } = require("erela.js");
 const { nodes } = require("./config.json");
+const DBL = require("dblapi.js");
+const dbl = new DBL(require("./secret.json").dbltoken, client);
 
 const commandFiles = fs
   .readdirSync("./Commands")
@@ -27,6 +29,14 @@ const commandFiles = fs
 const devFiles = fs
   .readdirSync("./DevCommands")
   .filter((file) => file.endsWith(".js"));
+
+dbl.on("posted", () => {
+  console.log("Server count posted!");
+});
+
+dbl.on("error", (e) => {
+  console.log(`Oops! ${e}`);
+});
 
 client.on("ready", () => {
   client.commands = new Discord.Collection();
