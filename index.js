@@ -25,6 +25,9 @@ const commandFiles = fs
   .filter((file) => file.endsWith(".js"));
 
 client.on("ready", () => {
+
+  console.log(nodes);
+
   client.commands = new Discord.Collection();
 
   for (const file of commandFiles) {
