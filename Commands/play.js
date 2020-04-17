@@ -70,7 +70,7 @@ module.exports = {
               const tracks  = res.tracks.slice(0,5);
               const embed = new RichEmbed()
               .setAuthor("Song Selection.",message.author.displayAvatarURL)
-              .setDescription(tracks.map(video => `**${index++} -** ${vidoe.title}`))
+              .setDescription(tracks.map(video => `**${index++} -** ${video.title}`))
               .setFooter("Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection");
               
               message.channel.send(embed);
