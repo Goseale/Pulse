@@ -77,7 +77,7 @@ module.exports = {
               (m) => {
                 return (
                   m.author.id === message.author.id &&
-                  new RegExp("^([1-5|cancel])$", "i").test(m.content)
+                  new RegExp("^([1-5]|cancel)$", "i").test(m.content)
                 );
               },
               { time: 30000, max: 1 }
