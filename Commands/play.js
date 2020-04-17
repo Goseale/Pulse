@@ -51,12 +51,13 @@ module.exports = {
         switch (res.loadType) {
           case "TRACK_LOADED":
             player.queue.add(res.tracks[0]);
-            message.channel.send(
-              `Enqueing \`${res.tracks[0].title}\` \`${Utils.formatTime(
+            const embed = new RichEmbed().setTitle(
+              `**Enqueing ${res.tracks[0].title} \`${Utils.formatTime(
                 res.tracks[0].duration,
                 true
-              )}\``
+              )}\`**`
             );
+            message.channel.send(embed);
             if (!player.playing) player.play();
             break;
           case "SEARCH_RESULT":
@@ -92,12 +93,13 @@ module.exports = {
               if (/cancel/i.test(m.content)) return collector.stop("cancelled");
               const track = tracks[Number(m.content) - 1];
               player.queue.add(track);
-              message.channel.send(
-                `Enqueing \`${track.title}\` \`${Utils.formatTime(
+              const embed = new RichEmbed().setTitle(
+                `**Enqueing ${track.title} \`${Utils.formatTime(
                   track.duration,
                   true
-                )}\``
+                )}\`**`
               );
+              message.channel.send(embed);
               if (!player.playing) player.play();
               return collector.stop("success");
             });
@@ -115,9 +117,10 @@ module.exports = {
               })).duration,
               true
             );
-            message.channel.send(
-              `Enqueing \`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\``
+            const embed = new RichEmbed().setTitle(
+              `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
             );
+            message.channel.send(embed);
             if (!player.playing) player.play();
             break;
         }
