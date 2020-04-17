@@ -80,7 +80,7 @@ module.exports = {
                   new RegExp(`^([1-5]|cancel)$`, "i").test(m.content)
                 );
               },
-              { time: 30000, filter: m.author.id, max: 1 }
+              { time: 30000, filter: m=>m.author.id, max: 1 }
             );
 
             collector.on("collect", (m) => {
