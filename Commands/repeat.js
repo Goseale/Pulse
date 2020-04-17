@@ -38,7 +38,7 @@ module.exports = {
         "You need to be in a voice channel to repeat music."
       );
     if (
-      !args[0] ||
+      !args[0] &&
       (!args[0].toLowerCase() == "track" && !args[0].toLowerCase() == "queue")
     )
       return message.channel.send(
