@@ -27,11 +27,11 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const commandFiles = fs
-      .readdirSync("../Commands")
+      .readdirSync("./Commands")
       .filter((file) => file.endsWith(".js"));
 
     const devFiles = fs
-      .readdirSync("../DevCommands")
+      .readdirSync("./DevCommands")
       .filter((file) => file.endsWith(".js"));
 
     console.log("Reloading Commands.");
