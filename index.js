@@ -71,6 +71,91 @@ client.on("ready", () => {
 
 client.on("message", (message) => {
   if (
+    require("./config.json").settings.developers.includes(message.author.id)
+  ) {
+    if (
+      !message.content.startsWith(
+        require("./config.json").settings.devprefix
+      ) ||
+      message.author.bot ||
+      message.channel.type !== "text"
+    )
+      return;
+
+    const args = message.content
+      .slice(require("./config.json").settings.prefix.length)
+      .split(/ +/);
+    const command = args.shift().toLowerCase();
+    const checkcmd =
+      client.commands.get(command) ||
+      client.commands.find(
+        (cmd) => cmd.aliases && cmd.aliases.includes(command)
+      );
+
+    if (!checkcmd) return;
+
+    if (!message.member.hasPermissions(checkcmd.permissions)) {
+      const embed = new Discord.RichEmbed()
+        .setColor(require("./config.json").colours.warning)
+        .setTitle("Error")
+        .setDescription(
+          `You need the following permission(s) to execute this command:\n\n\`\`\`${checkcmd.permissions
+            .filter((n) => !message.member.hasPermission(n))
+            .join(", ")}\`\`\``
+        )
+        .setFooter(
+          `Executed by ${message.author.tag}`,
+          message.author.avatarURL
+        )
+        .setTimestamp(message.createdTimestamp);
+      message.channel.send(embed);
+      return;
+    }
+
+    if (
+      !message.guild.members
+        .get(client.user.id)
+        .hasPermissions(checkcmd.needperms)
+    ) {
+      const embed = new Discord.RichEmbed()
+        .setColor(require("./config.json").colours.warning)
+        .setTitle("Error")
+        .setDescription(
+          `I need the following permission(s) to execute this command:\n\n\`\`\`${checkcmd.needperms
+            .filter(
+              (n) => !message.guild.members.get(client.user.id).hasPermission(n)
+            )
+            .join(", ")}\`\`\``
+        )
+        .setFooter(
+          `Executed by ${message.author.tag}`,
+          message.author.avatarURL
+        )
+        .setTimestamp(message.createdTimestamp);
+      message.channel.send(embed);
+      return;
+    }
+
+    try {
+      checkcmd.execute(message, args, client);
+    } catch (error) {
+      console.error(error);
+      const embed = new Discord.RichEmbed()
+        .setColor(require("./config.json").colours.warning)
+        .setTitle("Error")
+        .setDescription(
+          `There was an error trying to execute that command.\n\n\`\`\`js\n${error}\`\`\``
+        )
+        .setFooter(
+          `Executed by ${message.author.tag}`,
+          message.author.avatarURL
+        )
+        .setTimestamp(message.createdTimestamp);
+      message.channel.send(embed);
+    }
+  }
+
+  if (
     !message.content.startsWith(require("./config.json").settings.prefix) ||
     message.author.bot ||
     message.channel.type !== "text"
