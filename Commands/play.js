@@ -77,7 +77,7 @@ module.exports = {
               
                 const collector = message.channel.createMessageCollector(m => {
 
-                    return m.author.id === message.author.id && new RegExp('^([1-5]|cancel)$',"i").test(m.content)
+                    return m.author.id === message.author.id && new RegExp('^([1-5|cancel])$',"i").test(m.content)
 
                 }, {time: 30000,max: 1});
 
