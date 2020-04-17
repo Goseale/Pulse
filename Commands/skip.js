@@ -19,7 +19,7 @@ const { Utils } = require("erela.js");
 
 module.exports = {
   name: "skip",
-  aliases: ["next"],
+  aliases: ["next", "s"],
   usage: "",
   description: "Skips the song currently playing.",
   needperms: [],
