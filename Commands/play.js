@@ -75,7 +75,7 @@ module.exports = {
               
               message.channel.send(embed);
               
-                const collector = message.channel.createMessage.Collector(m => {
+                const collector = message.channel.createMessageCollector(m => {
 
                     return m.author.id === message.author.id && new RegExp('^([1-5]|cancel)$',"i").test(m.content)
 
