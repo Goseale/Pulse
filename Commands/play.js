@@ -51,7 +51,7 @@ module.exports = {
         switch (res.loadType) {
           case "TRACK_LOADED":
             player.queue.add(res.tracks[0]);
-            const embed = new RichEmbed().setTitle(
+            let embed = new RichEmbed().setTitle(
               `**Enqueing ${res.tracks[0].title} \`${Utils.formatTime(
                 res.tracks[0].duration,
                 true
@@ -63,7 +63,7 @@ module.exports = {
           case "SEARCH_RESULT":
             let index = 1;
             const tracks = res.tracks.slice(0, 5);
-            const embed = new RichEmbed()
+            let embed = new RichEmbed()
               .setAuthor("Song Selection.", message.author.displayAvatarURL)
               .setDescription(
                 tracks.map((video) => `**${index++} -** ${video.title}`)
@@ -93,7 +93,7 @@ module.exports = {
               if (/cancel/i.test(m.content)) return collector.stop("cancelled");
               const track = tracks[Number(m.content) - 1];
               player.queue.add(track);
-              const embed = new RichEmbed().setTitle(
+              let embed = new RichEmbed().setTitle(
                 `**Enqueing ${track.title} \`${Utils.formatTime(
                   track.duration,
                   true
@@ -117,7 +117,7 @@ module.exports = {
               })).duration,
               true
             );
-            const embed = new RichEmbed().setTitle(
+            let embed = new RichEmbed().setTitle(
               `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
             );
             message.channel.send(embed);
