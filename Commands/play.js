@@ -99,7 +99,7 @@ module.exports = {
                 )}\``
               );
               if (!player.playing) player.play();
-              return collector.stop("cancelled");
+              return collector.stop("success");
             });
             collector.on("end", (_, reason) => {
               if (["time", "cancelled"].includes(reason))
