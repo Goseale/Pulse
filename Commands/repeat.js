@@ -49,15 +49,15 @@ module.exports = {
 
     if (args[0].toLowerCase() == "track") {
       if (!args[1]) {
-        player.trackRepeat(!player.trackRepeat);
+        player.trackRepeat = !player.trackRepeat;
       } else {
-        player.trackRepeat(result);
+        player.trackRepeat = result;
       }
     } else {
       if (!args[1]) {
-        player.queueRepeat(!player.trackRepeat);
+        player.queueRepeat = !player.trackRepeat;
       } else {
-        player.queueRepeat(result);
+        player.queueRepeat = result;
       }
     }
 
