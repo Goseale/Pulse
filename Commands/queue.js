@@ -51,7 +51,7 @@ module.exports = {
     const embed = new RichEmbed()
       .setAuthor(
         `Current Queue for ${message.guild.name}`,
-        message / guild.iconURL
+        message.guild.iconURL
       )
       .setThumbnail(player.queue[0].setThumbnail)
       .setDescription(string);
