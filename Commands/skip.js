@@ -32,7 +32,7 @@ module.exports = {
       return message.channel.send(
         "No song/s currrently playing in this guild."
       );
-    if (voiceChannel || voiceChannel.id !== player.voiceChannel.id)
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
       return message.channel.send(
         "You need to be in a voice channel to use the skip command."
       );

@@ -34,6 +34,10 @@ module.exports = {
       );
     if (!args[0])
       return message.channel.send(`Current Volume: ${player.volume}`);
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
+      return message.channel.send(
+        "You need to be in a voice channel to shuffle music."
+      );
     if (Number(args[0]) <= 0 || Number(args[0]) > 500)
       return message.channel.send("You may only set the volume 0-500");
 
