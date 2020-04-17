@@ -21,7 +21,7 @@ module.exports = {
   aliases: ["h"],
   usage: "[command]",
   description: "Displays a list of dev commands for this bot.",
-  needperms: ["SEND_MESSAGES"],
+  needperms: [],
   permissions: [],
   execute(message, args, client) {
     if (!args[0]) {

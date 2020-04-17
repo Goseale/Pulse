@@ -23,7 +23,7 @@ module.exports = {
   aliases: ["restart", "r", "reload", "refresh", "load"],
   usage: "",
   description: "Reloads all commands.",
-  needperms: ["SEND_MESSAGES"],
+  needperms: [],
   permissions: [],
   execute(message, args, client) {
     const commandFiles = fs

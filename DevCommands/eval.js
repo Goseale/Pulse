@@ -23,7 +23,7 @@ module.exports = {
   aliases: ["e", "code", "exe", "execute"],
   usage: "<javascript code>",
   description: "Evaluates javascript code.",
-  needperms: ["SEND_MESSAGES"],
+  needperms: [],
   permissions: [],
   execute(message, args, client) {
     if (!args[0]) {
