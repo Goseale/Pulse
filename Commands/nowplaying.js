@@ -26,7 +26,7 @@ module.exports = {
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
-    const player = client.players.get(message.guild.id);
+    const player = client.music.players.get(message.guild.id);
     if (!player || !player.queue(0))
       return message.channel.send("No son/s currently playing in this guild.");
     const { title, author, duration, url, thumbnail } = player.queue[0];
