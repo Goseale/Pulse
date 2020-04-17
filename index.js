@@ -75,7 +75,7 @@ client.on("message", (message) => {
     message.content.startsWith(require("./config.json").settings.devprefix)
   ) {
     const args = message.content
-      .slice(require("./config.json").settings.prefix.length)
+      .slice(require("./config.json").settings.devprefix.length)
       .split(/ +/);
     const command = args.shift().toLowerCase();
     const checkcmd =
