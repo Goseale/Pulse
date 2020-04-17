@@ -145,8 +145,6 @@ client.on("message", (message) => {
         .setTimestamp(message.createdTimestamp);
       message.channel.send(embed);
     }
-  } else {
-    console.log("no");
   }
 
   if (
