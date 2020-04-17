@@ -19,12 +19,23 @@ const { Utils } = require("erela.js");
 
 module.exports = {
   name: "stop",
-  aliases: ["disconnect", "end"],
+  aliases: ["disconnect", "end", "leave"],
   usage: "",
   description: "Ends the queue and disconnects from the voice channel.",
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
+    const { voiceChannel } = message.member;
+    const player = client.music.players.get(message.guild.id);
+
+    if (voiceChannel && voiceChannel.id !== player.voiceChannel.id)
+      return message.channel.send(
+        "You need to be in a voice channel to use the leave command."
+      );
+    if (!player)
+      return message.channel.send("no song/s currently playing in this guild.");
+
     client.music.players.destroy(message.guild.id);
+    return message.channel.send("Successfully stopped the music.");
   },
 };
