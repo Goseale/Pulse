@@ -86,8 +86,7 @@ client.on("ready", () => {
   setInterval(() => {
     client.music.players.map((p) => {
       if (p.voiceChannel.members.filter((n) => !n.user.bot).size <= 0) {
-        new RichEmbed().setAuthor("Disconnected").setDescription("I've left as there is nobody in my voice channel")
-        p.textChannel.send(embed);
+        p.textChannel.send('I\'ve left as there is nobody in my voice channel');
         client.music.players.destroy(p.guild.id);
       }
     });
