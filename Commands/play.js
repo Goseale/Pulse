@@ -50,7 +50,7 @@ module.exports = {
     const player = client.music.players.spawn({
       guild: message.guild,
       textChannel: message.channel,
-      voiceChannel,
+      voiceChannel
     });
 
     client.music.search(args.join(" "), message.author).then((asyncres) => {

@@ -14,8 +14,8 @@
 // limitations under the License.
 //
 
-const fs = require('fs');
-const Discord = require('discord.js');
+const fs = require("fs");
+const Discord = require("discord.js");
 const client = new Discord.Client();
 const { ErelaClient, Utils } = require("erela.js");
 const { nodes } = require("./config.json");
@@ -25,9 +25,6 @@ const commandFiles = fs
   .filter((file) => file.endsWith(".js"));
 
 client.on("ready", () => {
-
-  console.log(nodes);
-
   client.commands = new Discord.Collection();
 
   for (const file of commandFiles) {
