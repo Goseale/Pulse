@@ -24,8 +24,14 @@ const commandFiles = fs
   .readdirSync("./Commands")
   .filter((file) => file.endsWith(".js"));
 
+const devFiles = fs
+  .readdirSync("./DevCommands")
+  .filter((file) => file.endsWith(".js"));
+
 client.on("ready", () => {
   client.commands = new Discord.Collection();
+
+  client.devcommands = new Discord.Collection();
 
   for (const file of commandFiles) {
     delete require.cache[require.resolve(`./Commands/${file}`)];
@@ -34,12 +40,19 @@ client.on("ready", () => {
     console.log(`Loaded ./Commands/${file}`);
   }
 
+  for (const file of devFiles) {
+    delete require.cache[require.resolve(`./DevCommands/${file}`)];
+    const command = require(`./DevCommands/${file}`);
+    client.devcommands.set(command.name, command);
+    console.log(`Loaded ./DevCommands/${file}`);
+  }
+
   client.music = new ErelaClient(client, nodes)
     .on("nodeError", console.log)
     .on("nodeConnect", () => console.log("Successfully created a new node."))
     .on("queueEnd", (player) => {
       player.textChannel.send("Queue has ended");
-      return bot.music.players.destroy(player.guild.id);
+      return client.music.players.destroy(player.guild.id);
     })
     .on("trackStart", ({ textChannel }, { title, duration }) =>
       textChannel.send(
@@ -53,7 +66,7 @@ client.on("ready", () => {
     .set("medium", 0.15)
     .set("high", 0.25);
 
-  console.log("Bot Ready.");
+  console.log("Client Ready.");
 });
 
 client.on("message", (message) => {

@@ -1,6 +1,7 @@
 {
   "settings": {
-    "prefix": "p!"
+    "prefix": "p!",
+    "devprefix": "p*"
   },
   "colours": {
     "success": "#00ff00",
