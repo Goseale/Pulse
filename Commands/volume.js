@@ -35,7 +35,7 @@ module.exports = {
     if (!args[0])
       return message.channel.send(`Current Volume: ${player.volume}`);
     if (Number(args[0]) <= 0 || Number(args[0]) > 500)
-      return message.channel.send("You may only set the volume 1-500");
+      return message.channel.send("You may only set the volume 0-500");
 
     player.setVolume(Number(args[0]));
     return message.channel.send(`Successfully set the volume to: ${args[0]}`);
