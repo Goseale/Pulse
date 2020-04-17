@@ -70,6 +70,7 @@ client.on("ready", () => {
 });
 
 client.on("message", (message) => {
+  console.log(message.content.startsWith(require("./config.json").settings.devprefix));
   if (
     //require("./config.json").settings.developers.includes(message.author.id) &&
     message.content.startsWith(require("./config.json").settings.devprefix)
