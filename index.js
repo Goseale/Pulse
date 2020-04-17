@@ -86,7 +86,7 @@ client.on("ready", () => {
   setInterval(() => {
     client.music.players.map((p) => {
       if (p.voiceChannel.members.filter((n) => !n.user.bot).size <= 0) {
-        const embed = new RichEmbed()
+        const embed = new Discord.RichEmbed()
           .setTitle("**Disconnected**")
           .setDescription("I've left as there is nobody in my voice channel");
         p.textChannel.send(embed);
