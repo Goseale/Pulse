@@ -42,7 +42,7 @@ module.exports = {
     const player = client.music.players.spawn({
       guild: message.guild,
       textChannel: message.channel,
-      voiceChannel
+      voiceChannel,
     });
 
     client.music
@@ -71,13 +71,13 @@ module.exports = {
                 "Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection"
               );
 
-            message.channel.send(embed);
+            await message.channel.send(embed);
 
             const collector = message.channel.createMessageCollector(
               (m) => {
                 return (
                   m.author.id === message.author.id &&
-                  new RegExp("^([1-5]|cancel)$", "i").test(m.content)
+                  new RegExp(`^([1-5]|cancel)$`, "i").test(m.content)
                 );
               },
               { time: 30000, max: 1 }
