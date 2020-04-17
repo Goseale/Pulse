@@ -82,7 +82,9 @@ module.exports = {
               },
               {
                 time: 30000,
-                filter: (m) => m.author.id === message.author.id,
+                filter: (m) =>
+                  m.author.id === message.author.id &&
+                  new RegExp(`^([1-5]|cancel)$`, "i").test(m.content),
                 max: 1,
               }
             );
