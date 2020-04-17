@@ -71,7 +71,7 @@ client.on("ready", () => {
 
 client.on("message", (message) => {
   if (
-    require("./config.json").settings.developers.includes(message.author.id) &&
+    //require("./config.json").settings.developers.includes(message.author.id) &&
     message.content.startsWith(require("./config.json").settings.devprefix)
   ) {
     const args = message.content
