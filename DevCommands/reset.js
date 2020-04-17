@@ -27,11 +27,11 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const commandFiles = fs
-      .readdirSync("./Commands")
+      .readdirSync("../Commands")
       .filter((file) => file.endsWith(".js"));
 
     const devFiles = fs
-      .readdirSync("./DevCommands")
+      .readdirSync("../DevCommands")
       .filter((file) => file.endsWith(".js"));
 
     console.log("Reloading Commands.");
@@ -48,17 +48,17 @@ module.exports = {
       client.devcommands = new Discord.Collection();
 
       for (const file of commandFiles) {
-        delete require.cache[require.resolve(`./Commands/${file}`)];
-        const command = require(`./Commands/${file}`);
+        delete require.cache[require.resolve(`../Commands/${file}`)];
+        const command = require(`../Commands/${file}`);
         client.commands.set(command.name, command);
-        console.log(`Loaded ./Commands/${file}`);
+        console.log(`Loaded ../Commands/${file}`);
       }
 
       for (const file of devFiles) {
-        delete require.cache[require.resolve(`./DevCommands/${file}`)];
-        const command = require(`./DevCommands/${file}`);
+        delete require.cache[require.resolve(`../DevCommands/${file}`)];
+        const command = require(`../DevCommands/${file}`);
         client.devcommands.set(command.name, command);
-        console.log(`Loaded ./DevCommands/${file}`);
+        console.log(`Loaded ../DevCommands/${file}`);
       }
       console.log("Reloaded Commands.");
 
