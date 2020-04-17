@@ -39,7 +39,7 @@ module.exports = {
       string += `__**Currently Playing**__\n${player.queue[0].title} - **Requested by ${player.queue[0].requester.username}**.\n`;
     if (player.queue[1])
       string += `__**Rest of queue:**__\n${player.queue
-        .slize(1, 10)
+        .slice(1, 10)
         .map(
           (x) =>
             `**${index++}** ${x.title} - **Requested by ${
