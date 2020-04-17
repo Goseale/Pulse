@@ -72,6 +72,8 @@ client.on("message", (message) => {
     client.commands.get(command) ||
     client.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(command));
 
+  if (!checkcmd) return;
+
   if (!message.member.hasPermissions(checkcmd.permissions)) {
     const embed = new Discord.RichEmbed()
       .setColor(require("./config.json").colours.warning)
@@ -124,4 +126,4 @@ client.on("message", (message) => {
   }
 });
 
-client.login(require('./secret.json').token);
+client.login(require("./secret.json").token);
