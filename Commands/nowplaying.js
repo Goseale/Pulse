@@ -37,7 +37,7 @@ module.exports = {
       .setDescription(
         stripIndents`${
           player.playing ? "▶️" : "⏸️"
-        } **[${title}](${url})**\`${Utils.formatTime(
+        } **[${title}](${url})** \`${Utils.formatTime(
           duration,
           true
         )}\` by ${author}`
