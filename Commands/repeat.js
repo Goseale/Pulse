@@ -45,7 +45,7 @@ module.exports = {
         "Please specify either `track` or `queue` to get repeated."
       );
 
-    if (args[1]) let result = args[1] == 'on';
+    if (args[1]) result = args[1] == 'on';
 
     if (args[0].toLowerCase() == "track") {
       if (!args[1]) {
