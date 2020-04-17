@@ -70,9 +70,8 @@ client.on("ready", () => {
 });
 
 client.on("message", (message) => {
-  console.log(message.content.startsWith(require("./config.json").settings.devprefix));
   if (
-    //require("./config.json").settings.developers.includes(message.author.id) &&
+    require("./config.json").settings.developers.includes(message.author.id) &&
     message.content.startsWith(require("./config.json").settings.devprefix)
   ) {
     const args = message.content
@@ -80,8 +79,8 @@ client.on("message", (message) => {
       .split(/ +/);
     const command = args.shift().toLowerCase();
     const checkcmd =
-      client.commands.get(command) ||
-      client.commands.find(
+      client.devcommands.get(command) ||
+      client.devcommands.find(
         (cmd) => cmd.aliases && cmd.aliases.includes(command)
       );
 
