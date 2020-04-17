@@ -38,8 +38,8 @@ module.exports = {
       return message.channel.send(
         "You need to be in a voice channel to shuffle music."
       );
-    if (Number(args[0]) <= 0 || Number(args[0]) > 200)
-      return message.channel.send("You may only set the volume from 0-200");
+    if (Number(args[0]) < 0 || Number(args[0]) > 150)
+      return message.channel.send("You may only set the volume from 0-150");
 
     player.setVolume(Number(args[0]));
     return message.channel.send(`Successfully set the volume to: ${args[0]}`);
