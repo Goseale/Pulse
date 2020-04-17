@@ -20,7 +20,7 @@ const { Utils } = require("erela.js");
 module.exports = {
   name: "play",
   aliases: ["p", "add", "a", "pplay"],
-  usage: "",
+  usage: "<song name/link>",
   description:
     "Choose a song/playlist or search for a song from YouTube to add to the song queue.",
   needperms: ["CONNECT", "SPEAK"],

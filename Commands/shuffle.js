@@ -19,7 +19,7 @@ const { Utils } = require("erela.js");
 
 module.exports = {
   name: "shuffle",
-  aliases: [],
+  aliases: ['mix'],
   usage: "",
   description: "Shuffles the queue.",
   needperms: [],
