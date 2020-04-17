@@ -62,7 +62,7 @@ module.exports = {
     }
 
     return message.channel.send(
-      `Player is now ${args[1] ? `${result == 'on' ? `repeating` : `not repeating`}` : `${args[0].toLowerCase() == 'track' ? `${player.trackRepeat ? `repeating` : `not repeating`}` : `${player.queueRepeat ? `repeating` : `not repeating`}`}`} the ${args[0].toLowerCase()}.`
+      `Player is now ${args[0].toLowerCase() == 'track' ? `${player.trackRepeat ? `repeating` : `not repeating`}` : `${player.queueRepeat ? `repeating` : `not repeating`}`} the ${args[0].toLowerCase()}.`
     );
   },
 };
