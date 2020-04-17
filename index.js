@@ -82,6 +82,18 @@ client.on("ready", () => {
   );
 
   console.log("Client Ready.");
+
+  setInterval(() => {
+    client.guilds
+      .filter((n) => n.voiceConnection)
+      .map((m) => {
+        if (
+          m.voiceConnection.channel.members.filter((n) => !n.user.bot).size <= 0
+        ) {
+          client.music.players.destroy(m.voiceConnection.channel.guild.id);
+        }
+      });
+  }, 30000);
 });
 
 client.on("message", (message) => {
