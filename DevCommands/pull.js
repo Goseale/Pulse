@@ -22,7 +22,7 @@ module.exports = {
   name: "pull",
   aliases: ["p", "update", "sync"],
   usage: "",
-  description: "Pulls any new files from the git.",
+  description: "Pulls any new files from the GitHub.",
   needperms: ["SEND_MESSAGES"],
   permissions: [],
   async execute(message, args, client) {
