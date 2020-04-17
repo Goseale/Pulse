@@ -85,7 +85,6 @@ module.exports = {
                 filter: (m) =>
                   m.author.id === message.author.id &&
                   new RegExp(`^([1-5]|cancel)$`, "i").test(m.content),
-                max: 1,
               }
             );
 
@@ -100,6 +99,7 @@ module.exports = {
                 )}\``
               );
               if (!player.playing) player.play();
+              return collector.stop("cancelled");
             });
             collector.on("end", (_, reason) => {
               if (["time", "cancelled"].includes(reason))
