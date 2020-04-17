@@ -66,6 +66,11 @@ client.on("ready", () => {
     .set("medium", 0.15)
     .set("high", 0.25);
 
+  client.user.setActivity(
+    `to sick beats. | ${require("./config.json").settings.prefix}help`,
+    { type: "LISTENING" }
+  );
+
   console.log("Client Ready.");
 });
 
