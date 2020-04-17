@@ -86,7 +86,7 @@ client.on("ready", () => {
   setInterval(() => {
     client.music.players.map((p) => {
       if (p.voiceChannel.members.filter((n) => !n.user.bot).size <= 0) {
-        client.music.playesr.destroy(p.guild.id);
+        client.music.players.destroy(p.guild.id);
       }
     });
   }, 30000);
