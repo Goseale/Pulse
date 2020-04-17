@@ -1,7 +1,7 @@
 {
   "settings": {
     "prefix": "p!",
-    "devprefix": "p*",
+    "devprefix": "p~",
     "developers": ["445035187370328066","286203738211745792"]
   },
   "colours": {
