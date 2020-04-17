@@ -53,8 +53,8 @@ module.exports = {
       voiceChannel
     });
 
-    client.music.search(args.join(" "), message.author).then((asyncres) => {
-      switch (exports.loadType) {
+    client.music.search(args.join(" "), message.author).then(async res => {
+      switch (res.loadType) {
         case "TRACK_LOADED":
           player.queue.add(res.tracks[0]);
           message.channel.send(
