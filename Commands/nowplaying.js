@@ -26,7 +26,7 @@ module.exports = {
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
-    const player = player;
+    const player = client.music.players.get(message.guild.id);
 
     if (!player || !player.queue[0]) {
       const embed = new RichEmbed().setDescription(
@@ -35,13 +35,7 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    const {
-      title,
-      author,
-      duration,
-      url,
-      thumbnail,
-    } = client.music.players.get(message.guild.id).queue[0];
+    const { title, author, duration, url, thumbnail } = player.queue[0];
 
     let progress = "";
 
