@@ -59,7 +59,7 @@ module.exports = {
           case "TRACK_LOADED":
             player.queue.add(res.tracks[0]);
             const embedtrack = new RichEmbed().setTitle(
-              `**Enqueing ${res.tracks[0].title} \`${Utils.formatTime(
+              `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
                 res.tracks[0].duration,
                 true
               )}\`**`
