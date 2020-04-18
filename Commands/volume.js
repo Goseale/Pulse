@@ -32,8 +32,12 @@ module.exports = {
       return message.channel.send(
         "No song/s currrently playing in this guild."
       );
-    if (!args[0])
-      return message.channel.send(`Current Volume: ${player.volume}`);
+    if (!args[0]) {
+      const embed = new RichEmbed().setDescription(
+        `Current Volume: ${player.volume}`
+      );
+      return message.channel.send(embed);
+    }
     if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
       return message.channel.send(
         "You need to be in a voice channel to shuffle music."
