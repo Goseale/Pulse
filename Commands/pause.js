@@ -51,38 +51,41 @@ module.exports = {
           } votes required.**`
         )
         .setFooter("Vote closes within the next 30 secconds.");
-      await message.channel.send(voteembed).then((m) => m.react("✅"));
+      await message.channel.send(voteembed).then((m) => {
+        m.react("✅");
 
-      const filter = (reaction, user) =>
-        reaction.emoji.name === "✅" &&
-        Array.from(
-          player.voiceChannel.members
-            .filter((n) => !n.user.bot)
-            .map((m) => m.id)
-        ).includes(user.id);
-      const collector = message.createReactionCollector(filter, {
-        time: 30000,
-      });
-      collector.on("collect", (r) => {
-        voteCount++;
-        message.channel.send(voteCount);
-        if (
-          voteCount >=
-          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
-        )
-          return collector.stop("success");
-      });
-      collector.on("end", (_, reason) => {
-        if (reason == "time") {
-          const embed = new RichEmbed().setDescription("Vote failed.");
-          return message.channel.send(embed);
-        } else {
-          player.pause(player.playing);
-          const embed = new RichEmbed().setDescription(
-            `Player is now ${player.playing ? "resumed" : "paused"}.`
-          );
-          return message.channel.send(embed);
-        }
+        const filter = (reaction, user) =>
+          reaction.emoji.name === "✅" &&
+          Array.from(
+            player.voiceChannel.members
+              .filter((n) => !n.user.bot)
+              .map((m) => m.id)
+          ).includes(user.id);
+        const collector = m.createReactionCollector(filter, {
+          time: 30000,
+        });
+
+        collector.on("collect", (r) => {
+          voteCount++;
+          message.channel.send(voteCount);
+          if (
+            voteCount >=
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          )
+            return collector.stop("success");
+        });
+        collector.on("end", (_, reason) => {
+          if (reason == "time") {
+            const embed = new RichEmbed().setDescription("Vote failed.");
+            return message.channel.send(embed);
+          } else {
+            player.pause(player.playing);
+            const embed = new RichEmbed().setDescription(
+              `Player is now ${player.playing ? "resumed" : "paused"}.`
+            );
+            return message.channel.send(embed);
+          }
+        });
       });
     } else {
       player.pause(player.playing);
