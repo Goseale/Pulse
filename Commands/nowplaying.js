@@ -38,14 +38,14 @@ module.exports = {
     const { title, author, duration, url, thumbnail } = player.queue[0];
 
     let progress = "";
-    console.log(Math.floor(player.position / duration) * 32);
-    for (var i = 0; i < Math.floor(player.position / duration) * 32; i++) {
+
+    for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
       progress += "═";
     }
 
     for (
       var i = 0;
-      i < 32 - Math.ceil(player.position / duration) * 32 + 1;
+      i < 32 - Math.ceil((player.position / duration) * 32 + 1);
       i++
     ) {
       if (i === 0) {
