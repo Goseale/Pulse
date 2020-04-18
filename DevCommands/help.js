@@ -129,7 +129,7 @@ module.exports = {
           .setTitle("Help")
           .setDescription(
             "Unable to find command `" +
-              client.devprefix +
+              require("../config.json").settings.devprefix +
               args[0].toLowerCase() +
               "`."
           )
