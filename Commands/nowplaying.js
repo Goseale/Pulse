@@ -28,31 +28,35 @@ module.exports = {
   async execute(message, args, client) {
     const player = client.music.players.get(message.guild.id);
 
-    if (!player || !player.queue[0]) {
-      const embed = new RichEmbed().setDescription(
-        "No song/s currently playing in this guild."
-      );
-      return message.channel.send(embed);
-    }
-
-    const { title, author, duration, url, thumbnail } = player.queue[0];
-
-    let progress = "";
-
-    for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
-      progress += "═";
-    }
-
-    for (
-      var i = 0;
-      i < 32 - Math.ceil((player.position / duration) * 32 + 1);
-      i++
-    ) {
-      if (i === 0) {
-        progress += "◯";
-      } else {
-        progress += "∙";
+    if (!player.isStream) {
+      if (!player || !player.queue[0]) {
+        const embed = new RichEmbed().setDescription(
+          "No song/s currently playing in this guild."
+        );
+        return message.channel.send(embed);
       }
+
+      const { title, author, duration, url, thumbnail } = player.queue[0];
+
+      let progress = "";
+
+      for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
+        progress += "═";
+      }
+
+      for (
+        var i = 0;
+        i < 32 - Math.ceil((player.position / duration) * 32 + 1);
+        i++
+      ) {
+        if (i === 0) {
+          progress += "◯";
+        } else {
+          progress += "∙";
+        }
+      }
+    } else {
+      string = "🔴 LIVE";
     }
 
     const embed = new RichEmbed()
