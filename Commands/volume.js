@@ -78,7 +78,7 @@ module.exports = {
 
         collector.on("collect", (_, u) => {
           if (
-            u.users.count >=
+            u.users.size >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
           )
             return collector.stop("success");
