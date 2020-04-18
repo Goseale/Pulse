@@ -26,7 +26,6 @@ module.exports = {
   execute(message, args, client) {
     if (!args[0]) {
       const embed = new RichEmbed()
-        .setColor(require("../config.json").colours.other)
         .setTitle("Help")
         .setDescription(
           "Commands:\n```asciidoc\n" +
@@ -49,7 +48,6 @@ module.exports = {
         .send(embed)
         .then(() => {
           const successembed = new RichEmbed()
-            .setColor(require("../config.json").colours.success)
             .setTitle("Help")
             .setDescription("Sent dev command list to your messages.")
             .setFooter(
@@ -61,7 +59,7 @@ module.exports = {
         })
         .catch((e) => {
           const errorembed = new RichEmbed()
-            .setColor(require("../config.json").colours.warning)
+
             .setTitle("Help")
             .setDescription("Unable to message you.")
             .setFooter(
@@ -80,7 +78,6 @@ module.exports = {
 
       if (checkcmd) {
         const embed = new RichEmbed()
-          .setColor(client.other)
           .setTitle(
             `Help | ${require("../config.json").settings.devprefix}${
               checkcmd.name
@@ -125,7 +122,6 @@ module.exports = {
         message.channel.send(embed);
       } else {
         const embed = new RichEmbed()
-          .setColor(client.warning)
           .setTitle("Help")
           .setDescription(
             "Unable to find command `" +
