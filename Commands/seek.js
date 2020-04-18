@@ -121,7 +121,7 @@ module.exports = {
               player.seek(Number(args[0]) * 60000 + Number(args[1]) * 1000);
               const embed = new RichEmbed().setDescription(
                 `Successfully seeked to: ${Utils.formatTime(
-                  Number(args[0]) * 60000,
+                  Number(args[0]) * 60000 + Number(args[1]) * 1000,
                   true
                 )}`
               );
@@ -161,7 +161,7 @@ module.exports = {
         player.seek(Number(args[0]) * 60000 + Number(args[1]) * 1000);
         const embed = new RichEmbed().setDescription(
           `Successfully seeked to: ${Utils.formatTime(
-            Number(args[0]) * 60000,
+            Number(args[0]) * 60000 + Number(args[1]) * 1000,
             true
           )}`
         );
