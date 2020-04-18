@@ -56,7 +56,7 @@ module.exports = {
         }
       ).then((res) => {
         res.json().then((lyrics) => {
-          if (lyrics.data[0].lyrics.length <= 3896) {
+          if (lyrics.data[0].lyrics.length <= 1948) {
             const how_many_to_split_at = 1948;
             const song_parts = [];
 
