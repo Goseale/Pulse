@@ -64,11 +64,12 @@ client.on("ready", () => {
       player.textChannel.send("Queue has ended");
       return client.music.players.destroy(player.guild.id);
     })
-    .on("trackStart", ({ textChannel }, { title, duration }) =>
-      textChannel.send(
-        `Now playing: **${title}** \`${Utils.formatTime(duration, true)}\``
-      )
-    );
+    .on("trackStart", ({ textChannel }, { title, duration }) => {
+      const embed = new Discord.RichEmbed()
+        .setTitle("Now Playing:")
+        .setDescription(`**${title}** \`${Utils.formatTime(duration, true)}\``);
+      textChannel.send(embed);
+    });
 
   client.levels = new Map()
     .set("none", 0.0)
