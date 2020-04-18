@@ -36,6 +36,9 @@ module.exports = {
       );
 
     client.music.players.destroy(message.guild.id);
-    return message.channel.send("Successfully stopped the music.");
+    const embed = new RichEmbed().setDescription(
+      "Successfully stopped the music."
+    );
+    return message.channel.send(embed);
   },
 };
