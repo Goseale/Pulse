@@ -27,10 +27,7 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const { voiceChannel } = message.member;
-    if (
-      !voiceChannel ||
-      (player && voiceChannel.id !== player.voiceChannel.id)
-    ) {
+    if (!voiceChannel) {
       const embed = new RichEmbed().setDescription(
         "You need to be in a voice channel to play music."
       );
@@ -47,6 +44,13 @@ module.exports = {
       textChannel: message.channel,
       voiceChannel,
     });
+
+    if (voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in the same voice channel to play music."
+      );
+      return message.channel.send(embed);
+    }
 
     client.music
       .search(args.join(" "), message.author)
