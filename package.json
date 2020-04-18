@@ -11,6 +11,7 @@
     "fs": "0.0.1-security",
     "git": "^0.1.5",
     "humanize-duration": "^3.22.0",
+    "node-fetch": "^2.6.0",
     "simple-git": "^1.132.0",
     "snekfetch": "^4.0.4",
     "util": "^0.12.2"
