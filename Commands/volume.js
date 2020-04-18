@@ -42,8 +42,12 @@ module.exports = {
       return message.channel.send(
         "You need to be in a voice channel to shuffle music."
       );
-    if (Number(args[0]) < 0 || Number(args[0]) > 150)
-      return message.channel.send("You may only set the volume from 0-150");
+    if (Number(args[0]) < 0 || Number(args[0]) > 150) {
+      const embed = new RichEmbed().setDescription(
+        "You may only set the volume from 0-150"
+      );
+      return message.channel.send(embed);
+    }
 
     player.setVolume(Number(args[0]));
     const embed = new RichEmbed().setDescription(
