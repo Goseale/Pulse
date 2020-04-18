@@ -36,12 +36,7 @@ module.exports = {
 
     console.log("Reloading Commands.");
 
-    const embed = new RichEmbed()
-      .setColor(require("../config.json").colours.other)
-      .setTitle("Reload")
-      .setDescription("Reloading Commands...")
-      .setFooter(`Executed by ${message.author.tag}`, message.author.avatarURL)
-      .setTimestamp(message.createdTimestamp);
+    const embed = new RichEmbed().setDescription("Reloading Commands...");
     message.channel.send(embed).then((messageinfo) => {
       client.commands = new Discord.Collection();
 
@@ -62,15 +57,7 @@ module.exports = {
       }
       console.log("Reloaded Commands.");
 
-      const newembed = new RichEmbed()
-        .setColor(require("../config.json").colours.success)
-        .setTitle("Reload")
-        .setDescription("Reloaded Commands.")
-        .setFooter(
-          `Executed by ${message.author.tag}`,
-          message.author.avatarURL
-        )
-        .setTimestamp(message.createdTimestamp);
+      const newembed = new RichEmbed().setDescription("Reloaded Commands.");
       messageinfo.edit(newembed);
     });
   },

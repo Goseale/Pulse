@@ -26,26 +26,15 @@ module.exports = {
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
-    const embed = new RichEmbed()
-      .setColor(require("../config.json").colours.other)
-      .setTitle("Pull")
-      .setDescription("Pulling changes from GitHub...")
-      .setFooter(`Executed by ${message.author.tag}`, message.author.avatarURL)
-      .setTimestamp(message.createdTimestamp);
+    const embed = new RichEmbed().setDescription(
+      "Pulling changes from GitHub..."
+    );
     await message.channel.send(embed).then(async (messageinfo) => {
       await cp.exec(
         `git pull ${require("../package.json").repository.url.split("+")[1]}`,
         { cwd: __dirname },
         async (error, stdout, stderr) => {
-          const newembed = new RichEmbed()
-            .setColor(require("../config.json").colours.other)
-            .setTitle("Pull")
-            .setDescription("Result:\n```" + stdout + "```")
-            .setFooter(
-              `Executed by ${message.author.tag}`,
-              message.author.avatarURL
-            )
-            .setTimestamp(message.createdTimestamp);
+          const newembed = new RichEmbed().setDescription(`${stdout}`);
           await messageinfo.edit(newembed);
         }
       );

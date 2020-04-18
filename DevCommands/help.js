@@ -25,48 +25,33 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     if (!args[0]) {
-      const embed = new RichEmbed()
-        .setTitle("Help")
-        .setDescription(
-          "Commands:\n```asciidoc\n" +
-            client.devcommands
-              .map(
-                (m) =>
-                  `== ${
-                    require("../config.json").settings.devprefix + m.name
-                  }\n${m.description}`
-              )
-              .join("\n") +
-            "```"
-        )
-        .setFooter(
-          `Executed by ${message.author.tag}`,
-          message.author.avatarURL
-        )
-        .setTimestamp(message.createdTimestamp);
+      const embed = new RichEmbed().setDescription(
+        "Commands:\n```asciidoc\n" +
+          client.devcommands
+            .map(
+              (m) =>
+                `== ${require("../config.json").settings.devprefix + m.name}\n${
+                  m.description
+                }`
+            )
+            .join("\n") +
+          "```"
+      );
+
       message.author
         .send(embed)
         .then(() => {
-          const successembed = new RichEmbed()
-            .setTitle("Help")
-            .setDescription("Sent dev command list to your messages.")
-            .setFooter(
-              `Executed by ${message.author.tag}`,
-              message.author.avatarURL
-            )
-            .setTimestamp(message.createdTimestamp);
+          const successembed = new RichEmbed().setDescription(
+            "Sent dev command list to your messages."
+          );
+
           message.channel.send(successembed);
         })
         .catch((e) => {
-          const errorembed = new RichEmbed()
+          const errorembed = new RichEmbed().setDescription(
+            "Unable to message you."
+          );
 
-            .setTitle("Help")
-            .setDescription("Unable to message you.")
-            .setFooter(
-              `Executed by ${message.author.tag}`,
-              message.author.avatarURL
-            )
-            .setTimestamp(message.createdTimestamp);
           message.channel.send(errorembed);
         });
     } else {
@@ -79,9 +64,7 @@ module.exports = {
       if (checkcmd) {
         const embed = new RichEmbed()
           .setTitle(
-            `Help | ${require("../config.json").settings.devprefix}${
-              checkcmd.name
-            }`
+            `${require("../config.json").settings.devprefix}${checkcmd.name}`
           )
           .setDescription(`${checkcmd.description}`)
           .addField(
@@ -113,27 +96,15 @@ module.exports = {
                 : "None"
             }\``,
             true
-          )
-          .setFooter(
-            `Executed by ${message.author.tag}`,
-            message.author.avatarURL
-          )
-          .setTimestamp(message.createdTimestamp);
+          );
         message.channel.send(embed);
       } else {
-        const embed = new RichEmbed()
-          .setTitle("Help")
-          .setDescription(
-            "Unable to find command `" +
-              require("../config.json").settings.devprefix +
-              args[0].toLowerCase() +
-              "`."
-          )
-          .setFooter(
-            `Executed by ${message.author.tag}`,
-            message.author.avatarURL
-          )
-          .setTimestamp(message.createdTimestamp);
+        const embed = new RichEmbed().setDescription(
+          "Unable to find command `" +
+            require("../config.json").settings.devprefix +
+            args[0].toLowerCase() +
+            "`."
+        );
         message.channel.send(embed);
       }
     }

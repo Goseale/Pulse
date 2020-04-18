@@ -27,25 +27,14 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     if (!args[0]) {
-      var embed = new RichEmbed()
-        .setColor(require("../config.json").colours.warning)
-        .setTitle("Eval")
-        .setDescription("You need to enter javascript code to evaluate!")
-        .setFooter(
-          `Executed by ${message.author.tag}`,
-          message.author.avatarURL
-        )
-        .setTimestamp(message.createdTimestamp);
+      var embed = new RichEmbed().setDescription(
+        "You need to enter javascript code to evaluate!"
+      );
       message.channel.send(embed);
       return;
     }
 
-    var embed = new RichEmbed()
-      .setColor(require("../config.json").colours.other)
-      .setTitle("Eval")
-      .setDescription("Working on it...")
-      .setFooter(`Executed by ${message.author.tag}`, message.author.avatarURL)
-      .setTimestamp(message.createdTimestamp);
+    var embed = new RichEmbed().setDescription("Working on it...");
 
     message.channel.send(embed).then(async (msg) => {
       try {
@@ -53,69 +42,38 @@ module.exports = {
         const inspected = await inspect(code); // inspect the code eval output
 
         if (inspected.toString().length < 1900 - message.content.length) {
-          embed = new RichEmbed()
-            .setColor(require("../config.json").colours.success)
-            .setTitle("Eval")
-            .setDescription(
-              `\`\`\`js\n${args.join(
-                " "
-              )}\n\`\`\`\n\n\`\`\`js\n${inspected}\n\`\`\``
-            )
-            .setFooter(
-              `Executed by ${message.author.tag}`,
-              message.author.avatarURL
-            )
-            .setTimestamp(message.createdTimestamp);
+          embed = new RichEmbed().setDescription(
+            `\`\`\`js\n${args.join(
+              " "
+            )}\n\`\`\`\n\n\`\`\`js\n${inspected}\n\`\`\``
+          );
           msg.edit(embed);
         } else {
           await post("https://hastebin.com/documents")
             .send(inspected.toString())
             .then((response) => {
-              embed = new RichEmbed()
-                .setColor(require("../config.json").colours.success)
-                .setTitle("Eval")
-                .setDescription(
-                  `\`\`\`js\n${args.join(" ")}\`\`\`\n\nhttps://hastebin.com/${
-                    response.body.key
-                  }`
-                )
-                .setFooter(
-                  `Executed by ${message.author.tag}`,
-                  message.author.avatarURL
-                )
-                .setTimestamp(message.createdTimestamp);
+              embed = new RichEmbed().setDescription(
+                `\`\`\`js\n${args.join(" ")}\`\`\`\n\nhttps://hastebin.com/${
+                  response.body.key
+                }`
+              );
 
               msg.edit(embed);
             })
             .catch((_err) => {
-              embed = new RichEmbed()
-                .setColor(require("../config.json").colours.warning)
-                .setTitle("Eval")
-                .setDescription(
-                  `:warning: Hastebin is down [0-1800] \`\`\`js\n${inspected
-                    .toString()
-                    .substring(0, 1800)}\`\`\``
-                )
-                .setFooter(
-                  `Executed by ${message.author.tag}`,
-                  message.author.avatarURL
-                )
-                .setTimestamp(message.createdTimestamp);
+              embed = new RichEmbed().setDescription(
+                `:warning: Hastebin is down [0-1800] \`\`\`js\n${inspected
+                  .toString()
+                  .substring(0, 1800)}\`\`\``
+              );
               return msg.edit(embed);
             });
         }
       } catch (e) {
-        embed = new RichEmbed()
-          .setColor(require("../config.json").colours.warning)
-          .setTitle("Eval")
-          .setDescription(
-            `There was an error with eval.\n\n:x: Error: \`\`\`js\n${e}\`\`\``
-          )
-          .setFooter(
-            `Executed by ${message.author.tag}`,
-            message.author.avatarURL
-          )
-          .setTimestamp(message.createdTimestamp);
+        embed = new RichEmbed().setDescription(
+          `There was an error with eval.\n\n:x: Error: \`\`\`js\n${e}\`\`\``
+        );
+
         msg.edit(embed);
       }
     });
