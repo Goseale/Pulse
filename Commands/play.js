@@ -63,7 +63,7 @@ module.exports = {
           case "SEARCH_RESULT":
             let index = 1;
             const tracks = res.tracks.slice(0, 5);
-            let embed = new RichEmbed()
+            let searchembed = new RichEmbed()
               .setAuthor("Song Selection.", message.author.displayAvatarURL)
               .setDescription(
                 tracks.map((video) => `**${index++} -** ${video.title}`)
@@ -72,7 +72,7 @@ module.exports = {
                 "Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection"
               );
 
-            await message.channel.send(embed);
+            await message.channel.send(searchembed);
 
             const collector = message.channel.createMessageCollector(
               (m) => {
