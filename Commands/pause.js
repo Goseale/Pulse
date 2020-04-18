@@ -38,8 +38,9 @@ module.exports = {
       );
 
     player.pause(player.playing);
-    return message.channel.send(
+    const embed = new RichEmbed().setDescription(
       `Player is now ${player.playing ? "resumed" : "paused"}.`
     );
+    return message.channel.send(embed);
   },
 };
