@@ -41,6 +41,46 @@ module.exports = {
       return message.channel.send(embed);
     }
 
+    if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+      let voteCount = 0;
+      const voteembed = new RichEmbed()
+        .setAuthor("Pause Music?", message.author.displayAvatarURL)
+        .setDescription(
+          `A vote is required to pause the player. **${
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          } votes required.**`
+        )
+        .setFooter("Vote closes within the next 30 secconds.");
+      message.channel.send(voteembed).then((m) => m.react("✅"));
+
+      const filter = (reaction, user) =>
+        reaction.emoji.name === "✅" &&
+        player.voiceChannel.members.filter((n) => !n.user.bot).id === user.id;
+      const collector = message.createReactionCollector(filter, {
+        time: 30000,
+      });
+      collector.on("collect", (r) => {
+        voteCount++;
+        if (
+          voiceCount >=
+          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+        )
+          return collector.stop("success");
+      });
+      collector.on("end", (_, reason) => {
+        if (reason == "time") {
+          const embed = new RichEmbed().setDescription("Vote failed.");
+          return message.channel.send(embed);
+        } else {
+          player.pause(player.playing);
+          const embed = new RichEmbed().setDescription(
+            `Player is now ${player.playing ? "resumed" : "paused"}.`
+          );
+          return message.channel.send(embed);
+        }
+      });
+    }
+
     player.pause(player.playing);
     const embed = new RichEmbed().setDescription(
       `Player is now ${player.playing ? "resumed" : "paused"}.`
