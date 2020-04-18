@@ -55,12 +55,14 @@ module.exports = {
 
       const filter = (reaction, user) =>
         reaction.emoji.name === "✅" &&
-        player.voiceChannel.members.filter((n) => !n.user.bot).id === user.id;
+        player.voiceChannel.members.filter((n) => !n.user.bot).user.id ===
+          user.id;
       const collector = message.createReactionCollector(filter, {
         time: 30000,
       });
       collector.on("collect", (r) => {
         voteCount++;
+        message.channel.send(voteCount);
         if (
           player.voiceChannel.members.filter((n) => !n.user.bot).size - 1 >=
           voiceCount
