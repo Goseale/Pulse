@@ -79,7 +79,6 @@ module.exports = {
               message.channel.send(embed);
             });
           } else {
-            let dmed = true;
             const how_many_to_split_at = 1948;
             const song_parts = [];
 
@@ -100,18 +99,17 @@ module.exports = {
                   `**${lyrics.data[0].name}**\n*${lyrics.data[0].artist}*\n\n${a}`
                 )
                 .setTimestamp(message.createdTimestamp);
-              message.author.send(embed).catch(() => (dmed = false));
+              message.author.send(embed).catch(() => {
+                const unable = new RichEmbed().setDescription(
+                  `Unable to send lyrics to DMs`
+                );
+
+                return message.channel.send(unable);
+              });
             });
 
             const notify = new RichEmbed().setDescription("Sent lyrics to DMs");
             message.channel.send(notify);
-            if (!demed) {
-              const unable = new RichEmbed().setDescription(
-                `Unable to send lyrics to DMs`
-              );
-
-              message.channel.send(unable);
-            }
           }
         });
       });
