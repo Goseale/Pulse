@@ -67,9 +67,10 @@ module.exports = {
 
         collector.on("collect", (_, u) => {
           voteCount.push(u.id);
+          console.log(u.id);
           console.log(voteCount)
           if (
-            voteCount.size >=
+            voteCount.length >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
           )
             return collector.stop("success");
