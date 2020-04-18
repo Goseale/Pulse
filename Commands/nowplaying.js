@@ -41,7 +41,7 @@ module.exports = {
       duration,
       url,
       thumbnail,
-    } = client.music.players.get(message.guild.id);
+    } = client.music.players.get(message.guild.id).queue[0];
 
     let progress = "";
 
