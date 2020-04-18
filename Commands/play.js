@@ -139,6 +139,9 @@ module.exports = {
             break;
         }
       })
-      .catch((err) => message.channel.send(err.message));
+      .catch((err) => {
+        const embed = new RichEmbed().setDescription(err.message);
+        message.channel.send(embed);
+      });
   },
 };
