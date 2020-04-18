@@ -50,7 +50,7 @@ module.exports = {
         )
         .join("\n")}`;
     if (player.queue.size > 10)
-      string += `*and ${player.queue.size - 10} more...*`;
+      string += `\n*and ${player.queue.size - 10} more...*`;
 
     const embed = new RichEmbed()
       .setAuthor(
