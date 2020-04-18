@@ -246,3 +246,32 @@ client.on("message", (message) => {
 });
 
 client.login(require("./secret.json").token);
+
+// Pulse Support Server Stuff
+
+client.on("guildMemberAdd", (member) => {
+  if (member.guild.id === "700963900807708742") {
+    const embed = new Discord.RichEmbed()
+      .setColor(client.other)
+      .setTitle(`Welcome to **Pulse Support Server** <@${member.user.id}>`)
+      .setDescription(
+        `Welcome to the server. \nIf you wish to invite the bot [You can click here](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\nTo use the bot type \`p!help\` inside <#700963901897965656>`
+      )
+      .setThumbnail(member.user.avatarURL);
+    client.channels.get("700963901529128975").send(embed);
+  }
+});
+
+client.on("guildMemberRemove", (member) => {
+  if (member.guild.id === "700963900807708742") {
+    const embed = new Discord.RichEmbed()
+      .setColor(client.other)
+      .setTitle("We are sad to see you go.")
+      .setDescription(
+        `<@${member.user.id}> has left. We wish they enjoyed their time here.`
+      )
+      .setThumbnail(member.user.avatarURL)
+      .setTimestamp(Date.now());
+    client.channels.get("700963901529128975").send(embed);
+  }
+});
