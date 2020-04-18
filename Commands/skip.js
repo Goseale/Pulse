@@ -67,6 +67,7 @@ module.exports = {
 
         collector.on("collect", () => {
           voteCount++;
+          console.log(voteCount);
           if (
             voteCount >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
@@ -75,6 +76,7 @@ module.exports = {
         });
         collector.on("remove", () => {
           voteCount--;
+          console.log(voteCount);
         });
         collector.on("end", (_, reason) => {
           if (reason == "time") {
