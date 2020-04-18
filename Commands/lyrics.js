@@ -28,11 +28,13 @@ module.exports = {
     const { voiceChannel } = message.member;
     const player = client.music.players.get(message.guild.id);
 
-    if ((!args[0] && !player) || !player.queue[0]) {
-      const embed = new RichEmbed().setDescription(
-        "No song/s currently playing in this guild."
-      );
-      return message.channel.send(embed);
+    if (!args[0] && !player) {
+      if (!player.queue[0]) {
+        const embed = new RichEmbed().setDescription(
+          "No song/s currently playing in this guild."
+        );
+        return message.channel.send(embed);
+      }
     }
 
     if (args[0]) {
@@ -114,7 +116,9 @@ module.exports = {
         });
       });
     } catch (e) {
-      const embed = new RichEmbed().setDescription("Unable to fetch lyrics.");
+      const embed = new RichEmbed().setDescription(
+        "Unable to fetch lyrics.\n\n" + e
+      );
       message.channel.send(embed);
     }
   },
