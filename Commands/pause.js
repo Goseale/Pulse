@@ -62,8 +62,8 @@ module.exports = {
       collector.on("collect", (r) => {
         voteCount++;
         if (
-          voiceCount >=
-          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1 >=
+          voiceCount
         )
           return collector.stop("success");
       });
@@ -79,12 +79,12 @@ module.exports = {
           return message.channel.send(embed);
         }
       });
+    } else {
+      player.pause(player.playing);
+      const embed = new RichEmbed().setDescription(
+        `Player is now ${player.playing ? "resumed" : "paused"}.`
+      );
+      return message.channel.send(embed);
     }
-
-    player.pause(player.playing);
-    const embed = new RichEmbed().setDescription(
-      `Player is now ${player.playing ? "resumed" : "paused"}.`
-    );
-    return message.channel.send(embed);
   },
 };
