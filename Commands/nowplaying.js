@@ -46,7 +46,7 @@ module.exports = {
         client.music.players.get(message.guild.id).position /
           client.music.players.get(message.guild.id).queue[0].duration
       ) *
-        15;
+        32;
       i++
     ) {
       progress += "═";
@@ -55,12 +55,12 @@ module.exports = {
     for (
       var i = 0;
       i <
-      15 -
+      32 -
         Math.floor(
           client.music.players.get(message.guild.id).position /
             client.music.players.get(message.guild.id).queue[0].duration
         ) *
-          15;
+          32;
       i++
     ) {
       if (i === 0) {
