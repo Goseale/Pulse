@@ -34,10 +34,12 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (!args[0])
-      return message.channel.send(
+    if (!args[0]) {
+      const embed = new RichEmbed().setDescription(
         "Please provide a song name or link to search."
       );
+      return message.channel.send(embed);
+    }
 
     const player = client.music.players.spawn({
       guild: message.guild,
