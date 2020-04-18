@@ -101,7 +101,7 @@ module.exports = {
               const track = tracks[Number(m.content) - 1];
               player.queue.add(track);
               const embedcollect = new RichEmbed().setTitle(
-                `**Enqueing ${track.title} \`${Utils.formatTime(
+                `**Enqueuing ${track.title} \`${Utils.formatTime(
                   track.duration,
                   true
                 )}\`**`
