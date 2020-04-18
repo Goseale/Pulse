@@ -46,6 +46,9 @@ module.exports = {
       return message.channel.send("You may only set the volume from 0-150");
 
     player.setVolume(Number(args[0]));
-    return message.channel.send(`Successfully set the volume to: ${args[0]}`);
+    const embed = new RichEmbed().setDescription(
+      `Successfully set the volume to: ${args[0]}`
+    );
+    return message.channel.send(embed);
   },
 };
