@@ -42,7 +42,6 @@ module.exports = {
     }
 
     if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
-      let voteCount = [];
       const voteembed = new RichEmbed()
         .setAuthor("Pause Music?", message.author.displayAvatarURL)
         .setDescription(
@@ -66,16 +65,11 @@ module.exports = {
         });
 
         collector.on("collect", (_, u) => {
-          voteCount.push(u.id);
           if (
-            voteCount.size >=
+            u.users.count >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
           )
             return collector.stop("success");
-        });
-        collector.on("dispose", (_, u) => {
-          for (var i = 0; i < voteCount.length; i++)
-            if (voteCount[i] === u.id) arr.splice(i, 1);
         });
         collector.on("end", (_, reason) => {
           if (reason == "time") {
