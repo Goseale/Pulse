@@ -65,6 +65,7 @@ module.exports = {
         });
 
         collector.on("collect", (_, u) => {
+          console.log(u.users.size);
           if (
             u.users.size >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
