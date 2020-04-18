@@ -67,7 +67,6 @@ module.exports = {
 
         collector.on("collect", (r) => {
           voteCount++;
-          message.channel.send(voteCount);
           if (
             voteCount >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
