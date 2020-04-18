@@ -38,6 +38,7 @@ module.exports = {
       );
 
     player.stop();
-    return message.channel.send("Skipped the current song!");
+    const embed = new RichEmbed().setDescription("Skipped the current song!");
+    return message.channel.send(embed);
   },
 };
