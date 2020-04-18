@@ -37,10 +37,14 @@ module.exports = {
       return message.channel.send(
         "You need to be in a voice channel to repeat music."
       );
-    if (!args[0] || args[0].toLowerCase() != "track" && args[0].toLowerCase() != "queue")
-      return message.channel.send(
+    if (
+      !args[0] ||
+      (args[0].toLowerCase() != "track" && args[0].toLowerCase() != "queue")
+    )
+      const embed = new RichEmbed().setDescription(
         "Please specify either `track` or `queue` to get repeated."
       );
+    return message.channel.send(embed);
 
     if (args[1]) result = args[1] == "on";
 
