@@ -51,7 +51,7 @@ module.exports = {
           } votes required.**`
         )
         .setFooter("Vote closes within the next 30 secconds.");
-      message.channel.send(voteembed).then((m) => m.react("✅"));
+      await message.channel.send(voteembed).then((m) => m.react("✅"));
 
       const filter = (reaction, user) =>
         reaction.emoji.name === "✅" &&
@@ -67,8 +67,8 @@ module.exports = {
         voteCount++;
         message.channel.send(voteCount);
         if (
-          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1 >=
-          voiceCount
+          voteCount >=
+          player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
         )
           return collector.stop("success");
       });
