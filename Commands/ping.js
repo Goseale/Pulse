@@ -25,7 +25,6 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const embed = new RichEmbed()
-      .setColor(require("../config.json").colours.other)
       .setTitle("Pong!")
       .addField(
         "Bot Latency",
