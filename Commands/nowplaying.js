@@ -41,6 +41,7 @@ module.exports = {
 
     for (var i = 0; i < Math.floor(player.position / duration) * 32; i++) {
       progress += "═";
+      console.log(Math.floor(player.position / duration) * 32);
     }
 
     for (
