@@ -37,10 +37,12 @@ module.exports = {
       }
     }
 
+    let search = "";
+
     if (args[0]) {
-      let search = args.join(" ");
+      search = args.join(" ");
     } else {
-      let search = player.queue[0].title;
+      search = player.queue[0].title;
     }
 
     try {
