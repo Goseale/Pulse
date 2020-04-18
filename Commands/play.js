@@ -111,8 +111,12 @@ module.exports = {
               return collector.stop("success");
             });
             collector.on("end", (_, reason) => {
-              if (["time", "cancelled"].includes(reason))
-                return message.channel.send("Cancelled selection.");
+              if (["time", "cancelled"].includes(reason)) {
+                const embed = new RichEmbed().setDescription(
+                  "Cancelled selection."
+                );
+                return message.channel.send(embed);
+              }
             });
             break;
 
