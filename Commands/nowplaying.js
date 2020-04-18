@@ -37,9 +37,11 @@ module.exports = {
 
     const { title, author, duration, url, thumbnail } = player.queue[0];
 
-    let progress = "";
+    let embed = new RichEmbed();
 
     if (!player.queue[0].isStream) {
+      let progress = "";
+
       for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
         progress += "═";
       }
@@ -55,24 +57,33 @@ module.exports = {
           progress += "∙";
         }
       }
+      embed = new RichEmbed()
+        .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+        .setThumbnail(thumbnail)
+        .setDescription(
+          stripIndents`${
+            player.playing ? "▶️" : "⏸️"
+          } **[${title}](${url})** \`${Utils.formatTime(
+            duration,
+            true
+          )}\` by ${author}\n\n\`${Utils.formatTime(
+            player.position,
+            true
+          )} ${progress} ${Utils.formatTime(duration, true)}\``
+        );
     } else {
-      string = "🔴 LIVE";
+      const embed = new RichEmbed()
+        .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+        .setThumbnail(thumbnail)
+        .setDescription(
+          stripIndents`${
+            player.playing ? "▶️" : "⏸️"
+          } **[${title}](${url})** \`${Utils.formatTime(
+            duration,
+            true
+          )}\` by ${author}\n\n\`🔴 LIVE\``
+        );
     }
-
-    const embed = new RichEmbed()
-      .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
-      .setThumbnail(thumbnail)
-      .setDescription(
-        stripIndents`${
-          player.playing ? "▶️" : "⏸️"
-        } **[${title}](${url})** \`${Utils.formatTime(
-          duration,
-          true
-        )}\` by ${author}\n\n\`${Utils.formatTime(
-          player.position,
-          true
-        )} ${progress} ${Utils.formatTime(duration, true)}\``
-      );
 
     return message.channel.send(embed);
   },
