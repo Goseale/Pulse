@@ -99,7 +99,7 @@ module.exports = {
           )
             return collector.stop("success");
         });
-        collector.on("dispose", () => {
+        collector.on("remove", () => {
           voteCount--;
         });
         collector.on("end", (_, reason) => {
