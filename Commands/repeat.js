@@ -40,11 +40,12 @@ module.exports = {
     if (
       !args[0] ||
       (args[0].toLowerCase() != "track" && args[0].toLowerCase() != "queue")
-    )
+    ) {
       const embed = new RichEmbed().setDescription(
         "Please specify either `track` or `queue` to get repeated."
       );
-    return message.channel.send(embed);
+      return message.channel.send(embed);
+    }
 
     if (args[1]) result = args[1] == "on";
 
