@@ -35,7 +35,13 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    const { title, author, duration, url, thumbnail } = player.queue[0];
+    const {
+      title,
+      author,
+      duration,
+      url,
+      thumbnail,
+    } = client.music.players.get(message.guild.id);
 
     let progress = "";
 
