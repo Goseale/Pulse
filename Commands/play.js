@@ -43,6 +43,7 @@ module.exports = {
       guild: message.guild,
       textChannel: message.channel,
       voiceChannel,
+      selfDeaf: true,
     });
 
     if (voiceChannel.id !== player.voiceChannel.id) {
