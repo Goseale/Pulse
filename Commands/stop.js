@@ -66,8 +66,8 @@ module.exports = {
         });
 
         collector.on("collect", (_, u) => {
-          voteCount.push(u.id);
-          console.log(u.id);
+          voteCount.push(u);
+          console.log(u);
           console.log(voteCount)
           if (
             voteCount.length >=
@@ -77,7 +77,7 @@ module.exports = {
         });
         collector.on("dispose", (_, u) => {
           for (var i = 0; i < voteCount.length; i++)
-            if (voteCount[i] === u.id) voteCount.splice(i, 1);
+            if (voteCount[i] === u) voteCount.splice(i, 1);
           console.log(voteCount);
         });
         collector.on("end", (_, reason) => {
