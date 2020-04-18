@@ -39,6 +39,7 @@ module.exports = {
       );
 
     player.queue.shuffle();
-    return message.channel.send("The queue is now shuffled.");
+    const embed = new RichEmbed().setDescription("The queue is now shuffled.");
+    return message.channel.send(embed);
   },
 };
