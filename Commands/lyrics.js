@@ -118,9 +118,7 @@ module.exports = {
         });
       });
     } catch (e) {
-      const embed = new RichEmbed().setDescription(
-        "Unable to fetch lyrics.\n\n" + e
-      );
+      const embed = new RichEmbed().setDescription("Unable to fetch lyrics.");
       message.channel.send(embed);
     }
   },
