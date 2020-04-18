@@ -63,12 +63,13 @@ module.exports = {
       }
     }
 
-    return message.channel.send(
+    const embed = new RichEmbed().setDescription(
       `Player is now ${
         args[0].toLowerCase() == "track"
           ? `${player.trackRepeat ? `repeating` : `not repeating`}`
           : `${player.queueRepeat ? `repeating` : `not repeating`}`
       } the ${args[0].toLowerCase()}.`
     );
+    return message.channel.send(embed);
   },
 };
