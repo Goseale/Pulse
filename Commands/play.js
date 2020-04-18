@@ -27,12 +27,12 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const { voiceChannel } = message.member;
-    if (!voiceChannel)
-      return message.channel.send(
-        "You need to be in a voice channel to play music"
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in a voice channel to play music."
       );
-
-    const permissions = voiceChannel.permissionsFor(client.user);
+      return message.channel.send(embed);
+    }
 
     if (!args[0])
       return message.channel.send(

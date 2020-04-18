@@ -36,10 +36,12 @@ module.exports = {
       return message.channel.send(
         `Please specify where to seek into the song.`
       );
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
         "You need to be in a voice channel to seek music."
       );
+      return message.channel.send(embed);
+    }
     if (!args[1]) {
       if (
         Number(args[0]) * 60000 < 0 ||

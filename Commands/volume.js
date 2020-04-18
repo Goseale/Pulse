@@ -38,10 +38,12 @@ module.exports = {
       );
       return message.channel.send(embed);
     }
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
-        "You need to be in a voice channel to shuffle music."
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in a voice channel to change the volume."
       );
+      return message.channel.send(embed);
+    }
     if (Number(args[0]) < 0 || Number(args[0]) > 150) {
       const embed = new RichEmbed().setDescription(
         "You may only set the volume from 0-150"

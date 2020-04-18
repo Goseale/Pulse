@@ -33,10 +33,12 @@ module.exports = {
       return message.channel.send(
         "No song/s currrently playing in this guild."
       );
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
         "You need to be in a voice channel to repeat music."
       );
+      return message.channel.send(embed);
+    }
     if (
       !args[0] ||
       (args[0].toLowerCase() != "track" && args[0].toLowerCase() != "queue")

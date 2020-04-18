@@ -30,10 +30,12 @@ module.exports = {
 
     if (!player)
       return message.channel.send("no song/s currently playing in this guild.");
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
-        "You need to be in a voice channel to shuffle music."
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in a voice channel to stop music."
       );
+      return message.channel.send(embed);
+    }
 
     client.music.players.destroy(message.guild.id);
     const embed = new RichEmbed().setDescription(

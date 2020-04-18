@@ -19,7 +19,7 @@ const { Utils } = require("erela.js");
 
 module.exports = {
   name: "shuffle",
-  aliases: ['mix'],
+  aliases: ["mix"],
   usage: "",
   description: "Shuffles the queue.",
   needperms: [],
@@ -32,11 +32,12 @@ module.exports = {
       return message.channel.send(
         "No song/s currrently playing in this guild."
       );
-
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
         "You need to be in a voice channel to shuffle music."
       );
+      return message.channel.send(embed);
+    }
 
     player.queue.shuffle();
     const embed = new RichEmbed().setDescription("The queue is now shuffled.");

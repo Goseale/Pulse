@@ -32,10 +32,12 @@ module.exports = {
       return message.channel.send(
         "No song/s currrently playing in this guild."
       );
-    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id)
-      return message.channel.send(
-        "You need to be in a voice channel to use the skip command."
+    if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in a voice channel to skip music."
       );
+      return message.channel.send(embed);
+    }
 
     player.stop();
     const embed = new RichEmbed().setDescription("Skipped the current song!");
