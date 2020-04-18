@@ -40,37 +40,55 @@ module.exports = {
     let embed = new RichEmbed();
 
     if (!player.queue[0].isStream) {
-      let progress = "";
+      try {
+        let progress = "";
 
-      for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
-        progress += "═";
-      }
-
-      for (
-        var i = 0;
-        i < 32 - Math.ceil((player.position / duration) * 32 + 1);
-        i++
-      ) {
-        if (i === 0) {
-          progress += "◯";
-        } else {
-          progress += "∙";
+        for (
+          var i = 0;
+          i < Math.floor((player.position / duration) * 32);
+          i++
+        ) {
+          progress += "═";
         }
+
+        for (
+          var i = 0;
+          i < 32 - Math.ceil((player.position / duration) * 32 + 1);
+          i++
+        ) {
+          if (i === 0) {
+            progress += "◯";
+          } else {
+            progress += "∙";
+          }
+        }
+        embed = new RichEmbed()
+          .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+          .setThumbnail(thumbnail)
+          .setDescription(
+            stripIndents`${
+              player.playing ? "▶️" : "⏸️"
+            } **[${title}](${url})** \`${Utils.formatTime(
+              duration,
+              true
+            )}\` by ${author}\n\n\`${Utils.formatTime(
+              player.position,
+              true
+            )} ${progress} ${Utils.formatTime(duration, true)}\``
+          );
+      } catch (e) {
+        embed = new RichEmbed()
+          .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+          .setThumbnail(thumbnail)
+          .setDescription(
+            stripIndents`${
+              player.playing ? "▶️" : "⏸️"
+            } **[${title}](${url})** \`${Utils.formatTime(
+              duration,
+              true
+            )}\` by ${author}`
+          );
       }
-      embed = new RichEmbed()
-        .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
-        .setThumbnail(thumbnail)
-        .setDescription(
-          stripIndents`${
-            player.playing ? "▶️" : "⏸️"
-          } **[${title}](${url})** \`${Utils.formatTime(
-            duration,
-            true
-          )}\` by ${author}\n\n\`${Utils.formatTime(
-            player.position,
-            true
-          )} ${progress} ${Utils.formatTime(duration, true)}\``
-        );
     } else {
       embed = new RichEmbed()
         .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
