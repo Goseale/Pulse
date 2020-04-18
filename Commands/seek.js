@@ -48,8 +48,10 @@ module.exports = {
       if (
         Number(args[0]) * 60000 < 0 ||
         Number(args[0]) * 60000 > player.queue[0].duration
-      )
-        return message.channel.send("Invalid timestamp.");
+      ) {
+        const embed = new RichEmbed().setDescription("Invalid timestamp.");
+        return message.channel.send(embed);
+      }
 
       player.seek(Number(args[0]) * 60000);
       return message.channel.send(
