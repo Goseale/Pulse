@@ -26,7 +26,7 @@ module.exports = {
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
-    const player = client.music.players.get(message.guild.id);
+    const player = player;
 
     if (!player || !player.queue[0]) {
       const embed = new RichEmbed().setDescription(
@@ -39,28 +39,13 @@ module.exports = {
 
     let progress = "";
 
-    for (
-      var i = 0;
-      i <
-      Math.floor(
-        client.music.players.get(message.guild.id).position /
-          client.music.players.get(message.guild.id).queue[0].duration
-      ) *
-        32;
-      i++
-    ) {
+    for (var i = 0; i < Math.floor(player.position / duration) * 32; i++) {
       progress += "═";
     }
 
     for (
       var i = 0;
-      i <
-      32 -
-        Math.floor(
-          client.music.players.get(message.guild.id).position /
-            client.music.players.get(message.guild.id).queue[0].duration
-        ) *
-          32;
+      i < 32 - Math.ceil(player.position / duration) * 32 + 1;
       i++
     ) {
       if (i === 0) {
