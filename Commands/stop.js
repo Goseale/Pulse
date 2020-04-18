@@ -67,6 +67,7 @@ module.exports = {
 
         collector.on("collect", (_, u) => {
           voteCount.push(u.id);
+          message.channel.send(voteCount)
           if (
             voteCount.size >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
@@ -76,6 +77,7 @@ module.exports = {
         collector.on("dispose", (_, u) => {
           for (var i = 0; i < voteCount.length; i++)
             if (voteCount[i] === u.id) arr.splice(i, 1);
+          message.channel.send(voteCount);
         });
         collector.on("end", (_, reason) => {
           if (reason == "time") {
