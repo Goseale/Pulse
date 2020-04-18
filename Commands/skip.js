@@ -42,6 +42,7 @@ module.exports = {
     }
 
     if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+      let voteCount = 0;
       const voteembed = new RichEmbed()
         .setAuthor("Skip Track?", message.author.displayAvatarURL)
         .setDescription(
@@ -64,12 +65,16 @@ module.exports = {
           time: 30000,
         });
 
-        collector.on("collect", (_, u) => {
+        collector.on("collect", () => {
+          voteCount++;
           if (
-            u.users.size + 1 >=
+            voteCount >=
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
           )
             return collector.stop("success");
+        });
+        collector.on("dispose", () => {
+          voteCount--;
         });
         collector.on("end", (_, reason) => {
           if (reason == "time") {
