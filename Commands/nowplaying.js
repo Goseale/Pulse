@@ -37,6 +37,39 @@ module.exports = {
 
     const { title, author, duration, url, thumbnail } = player.queue[0];
 
+    let progress = "";
+
+    for (
+      var i = 0;
+      i <
+      Math.floor(
+        client.music.players.get(message.guild.id).position /
+          client.music.players.get(message.guild.id).queue[0].duration
+      ) *
+        15;
+      i++
+    ) {
+      progress += "═";
+    }
+
+    for (
+      var i = 0;
+      i <
+      15 -
+        Math.floor(
+          client.music.players.get(message.guild.id).position /
+            client.music.players.get(message.guild.id).queue[0].duration
+        ) *
+          15;
+      i++
+    ) {
+      if (i === 0) {
+        progress += "◯";
+      } else {
+        progress += "∙";
+      }
+    }
+
     const embed = new RichEmbed()
       .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
       .setThumbnail(thumbnail)
@@ -46,7 +79,10 @@ module.exports = {
         } **[${title}](${url})** \`${Utils.formatTime(
           duration,
           true
-        )}\` by ${author}`
+        )}\` by ${author}\n\n\`${Utils.formatTime(
+          player.position,
+          true
+        )} ${progress} ${Utils.formatTime(duration, true)}\``
       );
 
     return message.channel.send(embed);
