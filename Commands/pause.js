@@ -55,8 +55,9 @@ module.exports = {
 
       const filter = (reaction, user) =>
         reaction.emoji.name === "✅" &&
-        player.voiceChannel.members.filter((n) => !n.user.bot).user.id ===
-          user.id;
+        player.voiceChannel.members
+          .filter((n) => !n.user.bot)
+          .user.id.includes(user.id);
       const collector = message.createReactionCollector(filter, {
         time: 30000,
       });
