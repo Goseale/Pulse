@@ -72,7 +72,7 @@ module.exports = {
           )} ${progress} ${Utils.formatTime(duration, true)}\``
         );
     } else {
-      const embed = new RichEmbed()
+      embed = new RichEmbed()
         .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
         .setThumbnail(thumbnail)
         .setDescription(
