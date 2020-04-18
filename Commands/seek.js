@@ -46,37 +46,114 @@ module.exports = {
       );
       return message.channel.send(embed);
     }
-    if (!args[1]) {
-      if (
-        Number(args[0]) * 60000 < 0 ||
-        Number(args[0]) * 60000 > player.queue[0].duration
-      ) {
-        const embed = new RichEmbed().setDescription("Invalid timestamp.");
-        return message.channel.send(embed);
-      }
 
-      player.seek(Number(args[0]) * 60000);
-      return message.channel.send(
-        `Successfully seeked to: ${Utils.formatTime(
-          Number(args[0]) * 60000,
-          true
-        )}`
-      );
+    if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+      let voteCount = 0;
+      const voteembed = new RichEmbed()
+        .setAuthor("Seek Track?", message.author.displayAvatarURL)
+        .setDescription(
+          `A vote is required to seek the track. **${
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          } votes required.**`
+        )
+        .setFooter("Vote closes within the next 30 secconds.");
+      await message.channel.send(voteembed).then((m) => {
+        m.react("✅");
+
+        const filter = (reaction, user) =>
+          reaction.emoji.name === "✅" &&
+          Array.from(
+            player.voiceChannel.members
+              .filter((n) => !n.user.bot)
+              .map((m) => m.id)
+          ).includes(user.id);
+        const collector = m.createReactionCollector(filter, {
+          time: 30000,
+        });
+
+        collector.on("collect", (r) => {
+          voteCount++;
+          if (
+            voteCount >=
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          )
+            return collector.stop("success");
+        });
+        collector.on("end", (_, reason) => {
+          if (reason == "time") {
+            const embed = new RichEmbed().setDescription("Vote failed.");
+            return message.channel.send(embed);
+          } else {
+            if (!args[1]) {
+              if (
+                Number(args[0]) * 60000 < 0 ||
+                Number(args[0]) * 60000 > player.queue[0].duration
+              ) {
+                const embed = new RichEmbed().setDescription(
+                  "Invalid timestamp."
+                );
+                return message.channel.send(embed);
+              }
+
+              player.seek(Number(args[0]) * 60000);
+              return message.channel.send(
+                `Successfully seeked to: ${Utils.formatTime(
+                  Number(args[0]) * 60000,
+                  true
+                )}`
+              );
+            } else {
+              if (
+                Number(args[0]) * 60000 + Number(args[1]) * 1000 < 0 ||
+                Number(args[0]) * 60000 + Number(args[1]) * 1000 >
+                  player.queue[0].duration
+              )
+                return message.channel.send("Invalid timestamp.");
+
+              player.seek(Number(args[0]) * 60000 + Number(args[1]) * 1000);
+              return message.channel.send(
+                `Successfully seeked to: ${Utils.formatTime(
+                  Number(args[0]) * 60000 + Number(args[1]) * 1000,
+                  true
+                )}`
+              );
+            }
+          }
+        });
+      });
     } else {
-      if (
-        Number(args[0]) * 60000 + Number(args[1]) * 1000 < 0 ||
-        Number(args[0]) * 60000 + Number(args[1]) * 1000 >
-          player.queue[0].duration
-      )
-        return message.channel.send("Invalid timestamp.");
+      if (!args[1]) {
+        if (
+          Number(args[0]) * 60000 < 0 ||
+          Number(args[0]) * 60000 > player.queue[0].duration
+        ) {
+          const embed = new RichEmbed().setDescription("Invalid timestamp.");
+          return message.channel.send(embed);
+        }
 
-      player.seek(Number(args[0]) * 60000 + Number(args[1]) * 1000);
-      return message.channel.send(
-        `Successfully seeked to: ${Utils.formatTime(
-          Number(args[0]) * 60000 + Number(args[1]) * 1000,
-          true
-        )}`
-      );
+        player.seek(Number(args[0]) * 60000);
+        return message.channel.send(
+          `Successfully seeked to: ${Utils.formatTime(
+            Number(args[0]) * 60000,
+            true
+          )}`
+        );
+      } else {
+        if (
+          Number(args[0]) * 60000 + Number(args[1]) * 1000 < 0 ||
+          Number(args[0]) * 60000 + Number(args[1]) * 1000 >
+            player.queue[0].duration
+        )
+          return message.channel.send("Invalid timestamp.");
+
+        player.seek(Number(args[0]) * 60000 + Number(args[1]) * 1000);
+        return message.channel.send(
+          `Successfully seeked to: ${Utils.formatTime(
+            Number(args[0]) * 60000 + Number(args[1]) * 1000,
+            true
+          )}`
+        );
+      }
     }
   },
 };

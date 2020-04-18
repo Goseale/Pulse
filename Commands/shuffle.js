@@ -41,8 +41,57 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    player.queue.shuffle();
-    const embed = new RichEmbed().setDescription("The queue is now shuffled.");
-    return message.channel.send(embed);
+    if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+      let voteCount = 0;
+      const voteembed = new RichEmbed()
+        .setAuthor("Shuffle Queue?", message.author.displayAvatarURL)
+        .setDescription(
+          `A vote is required to suffle the queue. **${
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          } votes required.**`
+        )
+        .setFooter("Vote closes within the next 30 secconds.");
+      await message.channel.send(voteembed).then((m) => {
+        m.react("✅");
+
+        const filter = (reaction, user) =>
+          reaction.emoji.name === "✅" &&
+          Array.from(
+            player.voiceChannel.members
+              .filter((n) => !n.user.bot)
+              .map((m) => m.id)
+          ).includes(user.id);
+        const collector = m.createReactionCollector(filter, {
+          time: 30000,
+        });
+
+        collector.on("collect", (r) => {
+          voteCount++;
+          if (
+            voteCount >=
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          )
+            return collector.stop("success");
+        });
+        collector.on("end", (_, reason) => {
+          if (reason == "time") {
+            const embed = new RichEmbed().setDescription("Vote failed.");
+            return message.channel.send(embed);
+          } else {
+            player.queue.shuffle();
+            const embed = new RichEmbed().setDescription(
+              "The queue is now shuffled."
+            );
+            return message.channel.send(embed);
+          }
+        });
+      });
+    } else {
+      player.queue.shuffle();
+      const embed = new RichEmbed().setDescription(
+        "The queue is now shuffled."
+      );
+      return message.channel.send(embed);
+    }
   },
 };

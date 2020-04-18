@@ -67,13 +67,63 @@ module.exports = {
       }
     }
 
-    const embed = new RichEmbed().setDescription(
-      `Player is now ${
-        args[0].toLowerCase() == "track"
-          ? `${player.trackRepeat ? `repeating` : `not repeating`}`
-          : `${player.queueRepeat ? `repeating` : `not repeating`}`
-      } the ${args[0].toLowerCase()}.`
-    );
-    return message.channel.send(embed);
+    if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+      let voteCount = 0;
+      const voteembed = new RichEmbed()
+        .setAuthor("Repeat Music?", message.author.displayAvatarURL)
+        .setDescription(
+          `A vote is required to repeat the ${args[0].toLowerCase()}. **${
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          } votes required.**`
+        )
+        .setFooter("Vote closes within the next 30 secconds.");
+      await message.channel.send(voteembed).then((m) => {
+        m.react("✅");
+
+        const filter = (reaction, user) =>
+          reaction.emoji.name === "✅" &&
+          Array.from(
+            player.voiceChannel.members
+              .filter((n) => !n.user.bot)
+              .map((m) => m.id)
+          ).includes(user.id);
+        const collector = m.createReactionCollector(filter, {
+          time: 30000,
+        });
+
+        collector.on("collect", (r) => {
+          voteCount++;
+          if (
+            voteCount >=
+            player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+          )
+            return collector.stop("success");
+        });
+        collector.on("end", (_, reason) => {
+          if (reason == "time") {
+            const embed = new RichEmbed().setDescription("Vote failed.");
+            return message.channel.send(embed);
+          } else {
+            const embed = new RichEmbed().setDescription(
+              `Player is now ${
+                args[0].toLowerCase() == "track"
+                  ? `${player.trackRepeat ? `repeating` : `not repeating`}`
+                  : `${player.queueRepeat ? `repeating` : `not repeating`}`
+              } the ${args[0].toLowerCase()}.`
+            );
+            return message.channel.send(embed);
+          }
+        });
+      });
+    } else {
+      const embed = new RichEmbed().setDescription(
+        `Player is now ${
+          args[0].toLowerCase() == "track"
+            ? `${player.trackRepeat ? `repeating` : `not repeating`}`
+            : `${player.queueRepeat ? `repeating` : `not repeating`}`
+        } the ${args[0].toLowerCase()}.`
+      );
+      return message.channel.send(embed);
+    }
   },
 };
