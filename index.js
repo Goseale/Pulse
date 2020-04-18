@@ -61,7 +61,8 @@ client.on("ready", () => {
     .on("nodeError", console.log)
     .on("nodeConnect", () => console.log("Successfully created a new node."))
     .on("queueEnd", (player) => {
-      player.textChannel.send("Queue has ended");
+      const embed = new Discord.RichEmbed().setDescription("Queue has ended");
+      player.textChannel.send(embed);
       return client.music.players.destroy(player.guild.id);
     })
     .on("trackStart", ({ textChannel }, { title, duration }) => {
