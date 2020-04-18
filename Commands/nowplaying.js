@@ -37,9 +37,9 @@ module.exports = {
 
     const { title, author, duration, url, thumbnail } = player.queue[0];
 
-    if (!player.queue[0].isStream) {
-      let progress = "";
+    let progress = "";
 
+    if (!player.queue[0].isStream) {
       for (var i = 0; i < Math.floor((player.position / duration) * 32); i++) {
         progress += "═";
       }
