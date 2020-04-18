@@ -79,35 +79,33 @@ module.exports = {
               message.channel.send(embed);
             });
           } else {
-            try {
-              const how_many_to_split_at = 1948;
-              const song_parts = [];
+            let dmed = true;
+            const how_many_to_split_at = 1948;
+            const song_parts = [];
 
-              for (
-                var i = 0, charsLength = lyrics.data[0].lyrics.length;
-                i < charsLength;
-                i += how_many_to_split_at
-              ) {
-                song_parts.push(
-                  lyrics.data[0].lyrics.substring(i, i + how_many_to_split_at)
-                );
-              }
-
-              song_parts.forEach((a) => {
-                const embed = new RichEmbed()
-                  .setFooter("Lyrics provided by KSoft")
-                  .setDescription(
-                    `**${lyrics.data[0].name}**\n*${lyrics.data[0].artist}*\n\n${a}`
-                  )
-                  .setTimestamp(message.createdTimestamp);
-                message.author.send(embed);
-              });
-
-              const notify = new RichEmbed().setDescription(
-                "Sent lyrics to DMs"
+            for (
+              var i = 0, charsLength = lyrics.data[0].lyrics.length;
+              i < charsLength;
+              i += how_many_to_split_at
+            ) {
+              song_parts.push(
+                lyrics.data[0].lyrics.substring(i, i + how_many_to_split_at)
               );
-              message.channel.send(notify);
-            } catch (e) {
+            }
+
+            song_parts.forEach((a) => {
+              const embed = new RichEmbed()
+                .setFooter("Lyrics provided by KSoft")
+                .setDescription(
+                  `**${lyrics.data[0].name}**\n*${lyrics.data[0].artist}*\n\n${a}`
+                )
+                .setTimestamp(message.createdTimestamp);
+              message.author.send(embed).catch(() => (dmed = false));
+            });
+
+            const notify = new RichEmbed().setDescription("Sent lyrics to DMs");
+            message.channel.send(notify);
+            if (!demed) {
               const unable = new RichEmbed().setDescription(
                 `Unable to send lyrics to DMs`
               );
