@@ -20,7 +20,7 @@ const { stripIndents } = require("common-tags");
 
 module.exports = {
   name: "nowplaying",
-  aliases: ["np", "now", "song"],
+  aliases: ["np", "now", "song", "track"],
   usage: "",
   description: "Displays what the bot is currently playing.",
   needperms: [],
@@ -30,7 +30,7 @@ module.exports = {
 
     if (!player || !player.queue[0]) {
       const embed = new RichEmbed().setDescription(
-        "No song/s currently playing in this guild."
+        "No track/s currently playing in this guild."
       );
       return message.channel.send(embed);
     }
@@ -68,7 +68,10 @@ module.exports = {
             }
           }
           embed = new RichEmbed()
-            .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+            .setAuthor(
+              "Current Track Playing:",
+              message.author.displayAvatarURL
+            )
             .setThumbnail(thumbnail)
             .setDescription(
               stripIndents`${
@@ -83,7 +86,10 @@ module.exports = {
             );
         } catch (e) {
           embed = new RichEmbed()
-            .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+            .setAuthor(
+              "Current Track Playing:",
+              message.author.displayAvatarURL
+            )
             .setThumbnail(thumbnail)
             .setDescription(
               stripIndents`${
@@ -96,7 +102,7 @@ module.exports = {
         }
       } else {
         embed = new RichEmbed()
-          .setAuthor("Current Song Playing:", message.author.displayAvatarURL)
+          .setAuthor("Current Track Playing:", message.author.displayAvatarURL)
           .setThumbnail(thumbnail)
           .setDescription(
             stripIndents`${
