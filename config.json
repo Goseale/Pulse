@@ -11,31 +11,31 @@
     "gold": "#fcba03"
   },
   "radio": [
-    { "name": "onlyhitus", "url": "https://www.twitch.tv/onlyhitus" },
-    { "name": "monstercat", "url": "https://www.twitch.tv/monstercat" },
-    { "name": "urbanorder", "url": "https://www.twitch.tv/urbanorder" },
-    { "name": "chickenfm", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
+    { "name": "OnlyHitUS", "url": "https://www.twitch.tv/onlyhitus" },
+    { "name": "Monstercat", "url": "https://www.twitch.tv/monstercat" },
+    { "name": "UrbanOrder", "url": "https://www.twitch.tv/urbanorder" },
+    { "name": "ChickenFM", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
     {
-      "name": "chickenfmlizzo",
+      "name": "ChickenFMLizzo",
       "url": "http://78.46.148.53:8010/radio.mp3/;.m3u"
     },
     {
-      "name": "bbc1",
+      "name": "BBC1",
       "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
     },
-    { "name": "truckersfm", "url": "http://78.129.193.84:8000/;.m3u" },
-    { "name": "2020hits", "url": "http://176.31.111.65:12440/;.m3u" },
-    { "name": "knxfm", "url": "http://192.111.140.6:9609/;.m3u" },
+    { "name": "TruckersFM", "url": "http://78.129.193.84:8000/;.m3u" },
+    { "name": "2020Hits", "url": "http://176.31.111.65:12440/;.m3u" },
+    { "name": "KNXFM", "url": "http://192.111.140.6:9609/;.m3u" },
     {
-      "name": "bbc2",
+      "name": "BBC2",
       "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
     },
     {
-      "name": "radio1xtra",
+      "name": "Radio1Xtra",
       "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
     },
     {
-      "name": "classicfm",
+      "name": "ClassicFM",
       "url": "http://media-ice.musicradio.com/ClassicFMMP3"
     }
   ],
