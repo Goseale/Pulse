@@ -2,7 +2,7 @@
   "settings": {
     "prefix": "p!",
     "devprefix": "p~",
-    "developers": ["445035187370328066","286203738211745792"]
+    "developers": ["445035187370328066", "286203738211745792"]
   },
   "colours": {
     "success": "#00ff00",
@@ -10,10 +10,12 @@
     "other": "#666666",
     "gold": "#fcba03"
   },
-
-  "nodes": [{
-    "host": "localhost",
-    "port": 2333,
-    "password": "youshallnotpass"
-  }]
+  "radio": [{ "name": "OnlyHitUS", "url": "https://www.twitch.tv/onlyhitus" }],
+  "nodes": [
+    {
+      "host": "localhost",
+      "port": 2333,
+      "password": "youshallnotpass"
+    }
+  ]
 }
