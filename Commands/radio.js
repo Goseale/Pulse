@@ -33,11 +33,21 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    const check = require("../config.json").radio.find(
-      (station) => station.name && station.name.includes(args[0].toLowerCase())
-    );
+    if (!args[0]) {
+      const check = require("../config.json").radio.find(
+        (station) =>
+          station.name && station.name.includes(args[0].toLowerCase())
+      );
+    } else {
+      const embed = new RichEmbed().setDescription(
+        `Available Radio Stations: ${require("../config.json")
+          .radio.map((m) => m.name)
+          .join(", ")}`
+      );
+      return message.channel.send(embed);
+    }
 
-    if (!args[0] || !check) {
+    if (!check) {
       const embed = new RichEmbed().setDescription(
         `Available Radio Stations: ${require("../config.json")
           .radio.map((m) => m.name)
