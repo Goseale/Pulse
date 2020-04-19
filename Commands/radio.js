@@ -97,7 +97,7 @@ module.exports = {
             require("../config.json").radio.find(
               (station) =>
                 station.name &&
-                station.name.toLowerCase() === args[0].toLowerCase()
+                station.name.toLowerCase() === me.content.toLowerCase()
             ).url,
             message.author
           )
