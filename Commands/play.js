@@ -142,6 +142,7 @@ module.exports = {
       .catch((err) => {
         const embed = new RichEmbed().setDescription(err.message);
         message.channel.send(embed);
+        if (!player.playing) player.destroy();
       });
   },
 };
