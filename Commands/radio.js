@@ -40,18 +40,18 @@ module.exports = {
       );
     } else {
       const embed = new RichEmbed().setDescription(
-        `Available Radio Stations: ${require("../config.json")
+        `Available Radio Stations:\n\`\`\`${require("../config.json")
           .radio.map((m) => m.name)
-          .join(", ")}`
+          .join(", ")}\`\`\``
       );
       return message.channel.send(embed);
     }
 
     if (!check) {
       const embed = new RichEmbed().setDescription(
-        `Available Radio Stations: ${require("../config.json")
+        `Available Radio Stations:\n\`\`\`${require("../config.json")
           .radio.map((m) => m.name)
-          .join(", ")}`
+          .join(", ")}\`\`\``
       );
       return message.channel.send(embed);
     }
