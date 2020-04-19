@@ -36,7 +36,7 @@ module.exports = {
     }
     if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to skip music."
+        "You need to be in a voice channel to skip tracks."
       );
       return message.channel.send(embed);
     }
@@ -86,7 +86,7 @@ module.exports = {
           } else {
             player.stop();
             const embed = new RichEmbed().setDescription(
-              "Skipped the current song!"
+              "Skipped the current track!"
             );
             return message.channel.send(embed);
           }
@@ -94,7 +94,9 @@ module.exports = {
       });
     } else {
       player.stop();
-      const embed = new RichEmbed().setDescription("Skipped the current song!");
+      const embed = new RichEmbed().setDescription(
+        "Skipped the current track!"
+      );
       return message.channel.send(embed);
     }
   },

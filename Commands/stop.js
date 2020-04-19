@@ -86,7 +86,7 @@ module.exports = {
           } else {
             client.music.players.destroy(message.guild.id);
             const embed = new RichEmbed().setDescription(
-              "Successfully stopped the music."
+              "Successfully stopped the player."
             );
             return message.channel.send(embed);
           }
@@ -95,7 +95,7 @@ module.exports = {
     } else {
       client.music.players.destroy(message.guild.id);
       const embed = new RichEmbed().setDescription(
-        "Successfully stopped the music."
+        "Successfully stopped the player."
       );
       return message.channel.send(embed);
     }
