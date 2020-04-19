@@ -81,10 +81,7 @@ module.exports = {
         .then(async (res) => {
           player.queue.add(res.tracks[0]);
           const embedtrack = new RichEmbed().setTitle(
-            `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
-              res.tracks[0].duration,
-              true
-            )}\`**`
+            `**Enqueuing ${res.tracks[0].title}`
           );
           m.edit(embedtrack);
           if (!player.playing) player.play();
