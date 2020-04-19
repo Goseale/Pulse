@@ -95,6 +95,24 @@ client.on("ready", () => {
         client.music.players.destroy(p.guild.id);
       }
     });
+
+    const embed = new RichEmbed()
+      .setDescription(`**Pulse**\n*Created by Proximitynow and G3V*`)
+      .addField(`Guilds`, `${client.guilds.size}`, true)
+      .addField(`Users`, `${client.users.size}`, true)
+      .addField(`Voice Connections`, `${client.music.players.size}`)
+      .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`)
+      .addField(
+        `Links`,
+        `[Invite](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728) | [Vote](https://top.gg/bot/700145482957324289/vote) | [Support server](http://discord.gg/khFght9)`
+      );
+
+    client.channels
+      .get("700963901897965648")
+      .fetchMessages(1)
+      .then((messages) => {
+        messages.first().edit(embed);
+      });
   }, 30000);
 });
 
