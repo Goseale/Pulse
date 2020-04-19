@@ -33,13 +33,11 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (
-      !args[0] ||
-      !require("../config.json").radio.find(
-        (station) =>
-          station.name && station.name.includes(args[0].toLowerCase())
-      )
-    ) {
+    const check = require("../config.json").radio.find(
+      (station) => station.name && station.name.includes(args[0].toLowerCase())
+    );
+
+    if (!args[0] || !check) {
       const embed = new RichEmbed().setDescription(
         `Available Radio Stations: ${require("../config.json")
           .radio.map((m) => m.name)
@@ -63,13 +61,7 @@ module.exports = {
     }
 
     client.music
-      .search(
-        require("../config.json").radio.find(
-          (station) =>
-            station.name && station.name.includes(args[0].toLowerCase())
-        ).url,
-        message.author
-      )
+      .search(check.url, message.author)
       .then(async (res) => {
         switch (res.loadType) {
           case "TRACK_LOADED":
