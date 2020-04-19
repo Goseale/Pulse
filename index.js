@@ -85,6 +85,12 @@ client.on("ready", () => {
 
   console.log("Client Ready.");
 
+  const readyembed = new Discord.RichEmbed().setDescription(
+    `<:online33:701261102310359129> **Online**\nBot is back online!`
+  );
+
+  client.channels.get("700963901529128977").send(readyembed);
+
   setInterval(() => {
     client.music.players.map((p) => {
       if (p.voiceChannel.members.filter((n) => !n.user.bot).size <= 0) {
