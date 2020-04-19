@@ -28,7 +28,7 @@ module.exports = {
     const { voiceChannel } = message.member;
     if (!voiceChannel) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to play a radio."
+        "You need to be in a voice channel to play a radio station."
       );
       return message.channel.send(embed);
     }
@@ -67,7 +67,7 @@ module.exports = {
 
     if (voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in the same voice channel to play music."
+        "You need to be in the same voice channel to play a radio station."
       );
       return message.channel.send(embed);
     }
