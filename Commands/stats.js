@@ -15,18 +15,25 @@
 //
 
 const { RichEmbed } = require("discord.js");
+const { Utils } = require("erela.js");
 
 module.exports = {
-  name: "info",
-  aliases: ["invite", "vote", "links", "link", "inf"],
+  name: "stats",
+  aliases: ["stat", "status", "statistics", "botinfo", "botstats"],
   usage: "",
-  description: "Info and important links about Pulse.",
+  description: "Displays the current statistics of Pulse.",
   needperms: [],
   permissions: [],
   execute(message, args, client) {
-    const embed = new RichEmbed().setDescription(
-      `**Pulse**\n*Created by Proximitynow and G3V*\n\n[Invite Link](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\n[Vote Link](https://top.gg/bot/700145482957324289/vote)\n[Support Server](http://discord.gg/khFght9)`
-    );
+    const embed = new RichEmbed()
+      .setDescription(`**Pulse**\n*Created by Proximitynow and G3V*`)
+      .addField(`Guilds`, `${client.guilds.size}`, true)
+      .addField(`Users`, `${client.users.size}`, true)
+      .addField(`Voice Connections`, `${client.music.players.size}`)
+      .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`)
+      .addField(
+        `[Invite](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728) | [Vote](https://top.gg/bot/700145482957324289/vote) | [Support server](http://discord.gg/khFght9)`
+      );
 
     message.channel.send(embed);
   },
