@@ -27,7 +27,7 @@
     { "name": "2020hits", "url": "http://176.31.111.65:12440/;.m3u" },
     { "name": "knxfm", "url": "http://192.111.140.6:9609/;.m3u" },
     {
-      "name": "bcc2",
+      "name": "bbc2",
       "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
     },
     {
