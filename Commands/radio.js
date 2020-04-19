@@ -26,12 +26,6 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const { voiceChannel } = message.member;
-    if (!voiceChannel) {
-      const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to play a radio station."
-      );
-      return message.channel.send(embed);
-    }
 
     let check = null;
 
@@ -54,6 +48,13 @@ module.exports = {
         `Available Radio Stations:\n\`\`\`${require("../config.json")
           .radio.map((m) => m.name)
           .join(", ")}\`\`\``
+      );
+      return message.channel.send(embed);
+    }
+
+    if (!voiceChannel) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in a voice channel to play a radio station."
       );
       return message.channel.send(embed);
     }
