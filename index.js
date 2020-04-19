@@ -96,7 +96,7 @@ client.on("ready", () => {
       }
     });
 
-    const embed = new RichEmbed()
+    const embed = new Discord.RichEmbed()
       .setDescription(`**Pulse**\n*Created by Proximitynow and G3V*`)
       .addField(`Guilds`, `${client.guilds.size}`, true)
       .addField(`Users`, `${client.users.size}`, true)
