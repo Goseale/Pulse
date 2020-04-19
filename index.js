@@ -80,7 +80,7 @@ client.on("ready", () => {
 
   client.user.setActivity(
     `sick beats. | ${require("./config.json").settings.prefix}help`,
-    { type: "LISTENING" }
+    { type: "STREAMING", url: "https://twitch.tv/proximitynow/" }
   );
 
   console.log("Client Ready.");
