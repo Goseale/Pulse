@@ -25,10 +25,8 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const embed = new RichEmbed().setDescription(
-      `**Pulse**\n*Created by ${Map.from(
-        require("../config.json").settings.developers
-      )
-        .map((m) => {
+      `**Pulse**\n*Created by ${require("../config.json")
+        .settings.developers.map((m) => {
           `${client.users.get(m).username}#${
             client.users.get(m).discriminator
           }`;
