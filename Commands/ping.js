@@ -25,7 +25,6 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const embed = new RichEmbed()
-      .setTitle("Pong!")
       .addField(
         "Bot Latency",
         "`" + `${Date.now() - message.createdTimestamp}` + "ms`",
@@ -35,9 +34,8 @@ module.exports = {
         "Discord Latency",
         "`" + `${Math.round(client.ping)}` + "ms`",
         true
-      )
-      .setFooter(`Executed by ${message.author.tag}`, message.author.avatarURL)
-      .setTimestamp(message.createdTimestamp);
+      );
+
     message.channel.send(embed);
   },
 };
