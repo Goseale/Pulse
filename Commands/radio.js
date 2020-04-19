@@ -38,7 +38,7 @@ module.exports = {
     if (args[0]) {
       check = require("../config.json").radio.find(
         (station) =>
-          station.name && station.name.includes(args[0].toLowerCase())
+          station.name && station.name.toLowerCase() === args[0].toLowerCase()
       );
     } else {
       const embed = new RichEmbed().setDescription(
@@ -72,27 +72,27 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    client.music
-      .search(check.url, message.author)
-      .then(async (res) => {
-        switch (res.loadType) {
-          case "TRACK_LOADED":
-            player.queue.add(res.tracks[0]);
-            const embedtrack = new RichEmbed().setTitle(
-              `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
-                res.tracks[0].duration,
-                true
-              )}\`**`
-            );
-            message.channel.send(embedtrack);
-            if (!player.playing) player.play();
-            break;
-        }
-      })
-      .catch((err) => {
-        const embed = new RichEmbed().setDescription(err.message);
-        message.channel.send(embed);
-        if (!player.playing) player.destroy();
-      });
+    const loadembed = new RichEmbed().setDescription("Loading Track...");
+
+    message.channel.send(loadembed).then((m) => {
+      client.music
+        .search(check.url, message.author)
+        .then(async (res) => {
+          player.queue.add(res.tracks[0]);
+          const embedtrack = new RichEmbed().setTitle(
+            `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
+              res.tracks[0].duration,
+              true
+            )}\`**`
+          );
+          m.edit(embedtrack);
+          if (!player.playing) player.play();
+        })
+        .catch((err) => {
+          const embed = new RichEmbed().setDescription(err.message);
+          m.send(embed);
+          if (!player.playing) player.destroy();
+        });
+    });
   },
 };

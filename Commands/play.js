@@ -55,94 +55,99 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    client.music
-      .search(args.join(" "), message.author)
-      .then(async (res) => {
-        switch (res.loadType) {
-          case "TRACK_LOADED":
-            player.queue.add(res.tracks[0]);
-            const embedtrack = new RichEmbed().setTitle(
-              `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
-                res.tracks[0].duration,
-                true
-              )}\`**`
-            );
-            message.channel.send(embedtrack);
-            if (!player.playing) player.play();
-            break;
-          case "SEARCH_RESULT":
-            let index = 1;
-            const tracks = res.tracks.slice(0, 5);
-            const embedsearch = new RichEmbed()
-              .setAuthor("Song Selection.", message.author.displayAvatarURL)
-              .setDescription(
-                tracks.map((video) => `**${index++} -** ${video.title}`)
-              )
-              .setFooter(
-                "Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection"
-              );
+    const loadembed = new RichEmbed().setDescription("Loading Track...");
 
-            await message.channel.send(embedsearch);
-
-            const collector = message.channel.createMessageCollector(
-              (m) => {
-                return (
-                  m.author.id === message.author.id &&
-                  new RegExp(`^([1-5]|cancel)$`, "i").test(m.content)
-                );
-              },
-              {
-                time: 30000,
-                filter: (m) =>
-                  m.author.id === message.author.id &&
-                  new RegExp(`^([1-5]|cancel)$`, "i").test(m.content),
-              }
-            );
-
-            collector.on("collect", (m) => {
-              if (/cancel/i.test(m.content)) return collector.stop("cancelled");
-              const track = tracks[Number(m.content) - 1];
-              player.queue.add(track);
-              const embedcollect = new RichEmbed().setTitle(
-                `**Enqueuing ${track.title} \`${Utils.formatTime(
-                  track.duration,
+    message.channel.send(loadembed).then((m) => {
+      client.music
+        .search(args.join(" "), message.author)
+        .then(async (res) => {
+          switch (res.loadType) {
+            case "TRACK_LOADED":
+              player.queue.add(res.tracks[0]);
+              const embedtrack = new RichEmbed().setTitle(
+                `**Enqueuing ${res.tracks[0].title} \`${Utils.formatTime(
+                  res.tracks[0].duration,
                   true
                 )}\`**`
               );
-              message.channel.send(embedcollect);
+              m.edit(embedtrack);
               if (!player.playing) player.play();
-              return collector.stop("success");
-            });
-            collector.on("end", (_, reason) => {
-              if (["time", "cancelled"].includes(reason)) {
-                const embed = new RichEmbed().setDescription(
-                  "Cancelled selection."
+              break;
+            case "SEARCH_RESULT":
+              let index = 1;
+              const tracks = res.tracks.slice(0, 5);
+              const embedsearch = new RichEmbed()
+                .setAuthor("Song Selection.", message.author.displayAvatarURL)
+                .setDescription(
+                  tracks.map((video) => `**${index++} -** ${video.title}`)
+                )
+                .setFooter(
+                  "Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection"
                 );
-                return message.channel.send(embed);
-              }
-            });
-            break;
 
-          case "PLAYLIST_LOADED":
-            res.playlist.tracks.forEach((track) => player.queue.add(track));
-            const duration = Utils.formatTime(
-              res.playlist.tracks.reduce((acc, cur) => ({
-                duration: acc.duration + cur.duration,
-              })).duration,
-              true
-            );
-            const embedplaylist = new RichEmbed().setTitle(
-              `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
-            );
-            message.channel.send(embedplaylist);
-            if (!player.playing) player.play();
-            break;
-        }
-      })
-      .catch((err) => {
-        const embed = new RichEmbed().setDescription(err.message);
-        message.channel.send(embed);
-        if (!player.playing) player.destroy();
-      });
+              await m.edit(embedsearch);
+
+              const collector = message.channel.createMessageCollector(
+                (me) => {
+                  return (
+                    me.author.id === message.author.id &&
+                    new RegExp(`^([1-5]|cancel)$`, "i").test(me.content)
+                  );
+                },
+                {
+                  time: 30000,
+                  filter: (me) =>
+                    me.author.id === message.author.id &&
+                    new RegExp(`^([1-5]|cancel)$`, "i").test(me.content),
+                }
+              );
+
+              collector.on("collect", (me) => {
+                if (/cancel/i.test(me.content))
+                  return collector.stop("cancelled");
+                const track = tracks[Number(me.content) - 1];
+                player.queue.add(track);
+                const embedcollect = new RichEmbed().setTitle(
+                  `**Enqueuing ${track.title} \`${Utils.formatTime(
+                    track.duration,
+                    true
+                  )}\`**`
+                );
+                m.edit(embedcollect);
+                if (!player.playing) player.play();
+                return collector.stop("success");
+              });
+              collector.on("end", (_, reason) => {
+                if (["time", "cancelled"].includes(reason)) {
+                  const embed = new RichEmbed().setDescription(
+                    "Cancelled selection."
+                  );
+                  return m.edit(embed);
+                }
+              });
+              break;
+
+            case "PLAYLIST_LOADED":
+              res.playlist.tracks.forEach((track) => player.queue.add(track));
+              const duration = Utils.formatTime(
+                res.playlist.tracks.reduce((acc, cur) => ({
+                  duration: acc.duration + cur.duration,
+                })).duration,
+                true
+              );
+              const embedplaylist = new RichEmbed().setTitle(
+                `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
+              );
+              m.edit(embedplaylist);
+              if (!player.playing) player.play();
+              break;
+          }
+        })
+        .catch((err) => {
+          const embed = new RichEmbed().setDescription(err.message);
+          m.send(embed);
+          if (!player.playing) player.destroy();
+        });
+    });
   },
 };
