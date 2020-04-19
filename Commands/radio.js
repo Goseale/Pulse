@@ -33,7 +33,7 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (!args[0]) {
+    if (args[0]) {
       const check = require("../config.json").radio.find(
         (station) =>
           station.name && station.name.includes(args[0].toLowerCase())
