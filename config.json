@@ -14,7 +14,8 @@
     { "name": "onlyhitus", "url": "https://www.twitch.tv/onlyhitus" },
     { "name": "monstercat", "url": "https://www.twitch.tv/monstercat" },
     { "name": "urbanorder", "url": "https://www.twitch.tv/urbanorder" },
-    { "name": "chickenfm", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" }
+    { "name": "chickenfm", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
+    { "name": "chickenfmlizzo", "url": "http://78.46.148.53:8010/radio.mp3/;.m3u" }
   ],
   "nodes": [
     {
