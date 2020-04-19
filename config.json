@@ -11,14 +11,12 @@
     "gold": "#fcba03"
   },
   "radio": [
-    { "name": "OnlyHitUS", "url": "https://www.twitch.tv/onlyhitus" },
-    { "name": "Monstercat", "url": "https://www.twitch.tv/monstercat" },
-    { "name": "UrbanOrder", "url": "https://www.twitch.tv/urbanorder" },
-    { "name": "ChickenFM", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
-    {
-      "name": "ChickenFMLizzo",
-      "url": "http://78.46.148.53:8010/radio.mp3/;.m3u"
-    }
+    { "name": "onlyhitus", "url": "https://www.twitch.tv/onlyhitus" },
+    { "name": "monstercat", "url": "https://www.twitch.tv/monstercat" },
+    { "name": "urbanorder", "url": "https://www.twitch.tv/urbanorder" },
+    { "name": "chickenfm", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
+    { "name": "chickenfmlizzo", "url": "http://78.46.148.53:8010/radio.mp3/;.m3u" }
+    { "name": "bbc1", "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p" }
   ],
   "nodes": [
     {
