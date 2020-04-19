@@ -64,18 +64,24 @@ module.exports = {
         (me) => {
           return (
             me.author.id === message.author.id &&
-            require("../config.json")
-              .radio.map((m) => m.name.toLowerCase())
-              .includes(me.content.toLowerCase())
+            new RegExp(
+              `^(${require("../config.json")
+                .radio.map((m) => m.name.toLowerCase())
+                .join("|")}|cancel)$`,
+              "i"
+            ).test(me.content.toLowerCase())
           );
         },
         {
           time: 30000,
           filter: (me) =>
             me.author.id === message.author.id &&
-            require("../config.json")
-              .radio.map((m) => m.name.toLowerCase())
-              .includes(me.content.toLowerCase()),
+            new RegExp(
+              `^(${require("../config.json")
+                .radio.map((m) => m.name.toLowerCase())
+                .join("|")}|cancel)$`,
+              "i"
+            ).test(me.content.toLowerCase()),
         }
       );
 
