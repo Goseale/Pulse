@@ -20,37 +20,12 @@ const { Utils } = require("erela.js");
 module.exports = {
   name: "radio",
   aliases: ["playradio", "ra", "station"],
-  usage: "[station]",
+  usage: "",
   description: "Choose a radio station to add to the song queue.",
   needperms: ["CONNECT", "SPEAK"],
   permissions: [],
   execute(message, args, client) {
     const { voiceChannel } = message.member;
-
-    let check = null;
-
-    if (args[0]) {
-      check = require("../config.json").radio.find(
-        (station) =>
-          station.name && station.name.toLowerCase() === args[0].toLowerCase()
-      );
-    } else {
-      const embed = new RichEmbed().setDescription(
-        `Available Radio Stations:\n\`\`\`${require("../config.json")
-          .radio.map((m) => m.name)
-          .join(", ")}\`\`\``
-      );
-      return message.channel.send(embed);
-    }
-
-    if (!check) {
-      const embed = new RichEmbed().setDescription(
-        `Available Radio Stations:\n\`\`\`${require("../config.json")
-          .radio.map((m) => m.name)
-          .join(", ")}\`\`\``
-      );
-      return message.channel.send(embed);
-    }
 
     if (!voiceChannel) {
       const embed = new RichEmbed().setDescription(
@@ -73,11 +48,57 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    const loadembed = new RichEmbed().setDescription("Loading Track...");
+    const embed = new RichEmbed()
+      .setAuthor("Station Selection.", message.author.displayAvatarURL)
+      .setDescription(
+        `Available Radio Stations:\n\`\`\`${require("../config.json")
+          .radio.map((m) => m.name)
+          .join(", ")}\`\`\``
+      )
+      .setFooter(
+        "Your response time closes within the next 30 secconds. Type 'cancel' to cancel the selection"
+      );
 
-    message.channel.send(loadembed).then((m) => {
+    message.channel.send(embed).then((m) => {
+      const collector = message.channel.createMessageCollector({
+        time: 30000,
+        filter: (me) =>
+          me.author.id === message.author.id &&
+          require("../config.json")
+            .radio.map((m) => m.name.toLowerCase())
+            .includes(me.content.toLowerCase()),
+      });
+
+      collector.on("collect", (me) => {
+        if (/cancel/i.test(me.content)) return collector.stop("cancelled");
+
+        require("../config.json").radio.find(
+          (station) =>
+            station.name &&
+            station.name.toLowerCase() === me.content.toLowerCase()
+        );
+
+        return collector.stop("success");
+      });
+      collector.on("end", (_, reason) => {
+        if (["time", "cancelled"].includes(reason)) {
+          const embed = new RichEmbed().setDescription("Cancelled selection.");
+          return m.edit(embed);
+        }
+      });
+
+      const loadembed = new RichEmbed().setDescription("Loading Track...");
+
+      m.edit(loadembed);
       client.music
-        .search(check.url, message.author)
+        .search(
+          require("../config.json").radio.find(
+            (station) =>
+              station.name &&
+              station.name.toLowerCase() === args[0].toLowerCase()
+          ).url,
+          message.author
+        )
         .then(async (res) => {
           player.queue.add(res.tracks[0]);
           const embedtrack = new RichEmbed().setTitle(

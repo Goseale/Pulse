@@ -15,14 +15,29 @@
     { "name": "monstercat", "url": "https://www.twitch.tv/monstercat" },
     { "name": "urbanorder", "url": "https://www.twitch.tv/urbanorder" },
     { "name": "chickenfm", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
-    { "name": "chickenfmlizzo", "url": "http://78.46.148.53:8010/radio.mp3/;.m3u" },
-    { "name": "bbc1", "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p" },
+    {
+      "name": "chickenfmlizzo",
+      "url": "http://78.46.148.53:8010/radio.mp3/;.m3u"
+    },
+    {
+      "name": "bbc1",
+      "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio1_mf_p"
+    },
     { "name": "truckersfm", "url": "http://78.129.193.84:8000/;.m3u" },
     { "name": "2020hits", "url": "http://176.31.111.65:12440/;.m3u" },
     { "name": "knxfm", "url": "http://192.111.140.6:9609/;.m3u" },
-    { "name": "bcc2", "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p" },
-    { "name": "radio1xtra", "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p" },
-    { "name": "classicfm", "url": "http://media-ice.musicradio.com/ClassicFMMP3" }
+    {
+      "name": "bcc2",
+      "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
+    },
+    {
+      "name": "radio1xtra",
+      "url": "http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p"
+    },
+    {
+      "name": "classicfm",
+      "url": "http://media-ice.musicradio.com/ClassicFMMP3"
+    }
   ],
   "nodes": [
     {
