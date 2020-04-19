@@ -67,7 +67,10 @@ module.exports = {
       }
     }
 
-    if (player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3) {
+    if (
+      player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3 ||
+      message.member.hasPermission("MANAGE_CHANNELS")
+    ) {
       let voteCount = 0;
       const voteembed = new RichEmbed()
         .setAuthor("Repeat Music?", message.author.displayAvatarURL)
