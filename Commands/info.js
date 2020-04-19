@@ -25,15 +25,7 @@ module.exports = {
   permissions: [],
   execute(message, args, client) {
     const embed = new RichEmbed().setDescription(
-      `**Pulse**\n*Created by ${require("../config.json")
-        .settings.developers.map((m) => {
-          `${client.users.get(m).username}#${
-            client.users.get(m).discriminator
-          }`;
-        })
-        .join(
-          ", "
-        )}*\n\n[Invite Link](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\n[Vote Link](https://top.gg/bot/700145482957324289/vote)\n[Support Server](https://discord.gg/khFght9/)`
+      `**Pulse**\n*Created by Proximitynow and G3V*\n\n[Invite Link](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\n[Vote Link](https://top.gg/bot/700145482957324289/vote)\n[Support Server](https://discord.gg/khFght9/)`
     );
 
     message.channel.send(embed);
