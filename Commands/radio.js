@@ -60,21 +60,28 @@ module.exports = {
       );
 
     message.channel.send(embed).then((m) => {
-      const collector = message.channel.createMessageCollector({
-        time: 30000,
-      });
+      const collector = message.channel.createMessageCollector(
+        (me) => {
+          return (
+            me.author.id === message.author.id &&
+            require("../config.json")
+              .radio.map((m) => m.name.toLowerCase())
+              .includes(me.content.toLowerCase())
+          );
+        },
+        {
+          time: 30000,
+          filter: (me) =>
+            me.author.id === message.author.id &&
+            require("../config.json")
+              .radio.map((m) => m.name.toLowerCase())
+              .includes(me.content.toLowerCase()),
+        }
+      );
 
       collector.on("collect", (me) => {
         console.log("a");
         if (/cancel/i.test(me.content)) return collector.stop("cancelled");
-
-        if (
-          me.author.id != message.author.id ||
-          !require("../config.json")
-            .radio.map((m) => m.name.toLowerCase())
-            .includes(me.content.toLowerCase())
-        )
-          return;
 
         require("../config.json").radio.find(
           (station) =>
