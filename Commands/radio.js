@@ -78,6 +78,32 @@ module.exports = {
             station.name.toLowerCase() === me.content.toLowerCase()
         );
 
+        const loadembed = new RichEmbed().setDescription("Loading Track...");
+
+        m.edit(loadembed);
+        client.music
+          .search(
+            require("../config.json").radio.find(
+              (station) =>
+                station.name &&
+                station.name.toLowerCase() === args[0].toLowerCase()
+            ).url,
+            message.author
+          )
+          .then(async (res) => {
+            player.queue.add(res.tracks[0]);
+            const embedtrack = new RichEmbed().setTitle(
+              `**Enqueuing ${res.tracks[0].title}**`
+            );
+            m.edit(embedtrack);
+            if (!player.playing) player.play();
+          })
+          .catch((err) => {
+            const embed = new RichEmbed().setDescription(err.message);
+            m.send(embed);
+            if (!player.playing) player.destroy();
+          });
+
         return collector.stop("success");
       });
       collector.on("end", (_, reason) => {
@@ -86,32 +112,6 @@ module.exports = {
           return m.edit(embed);
         }
       });
-
-      const loadembed = new RichEmbed().setDescription("Loading Track...");
-
-      m.edit(loadembed);
-      client.music
-        .search(
-          require("../config.json").radio.find(
-            (station) =>
-              station.name &&
-              station.name.toLowerCase() === args[0].toLowerCase()
-          ).url,
-          message.author
-        )
-        .then(async (res) => {
-          player.queue.add(res.tracks[0]);
-          const embedtrack = new RichEmbed().setTitle(
-            `**Enqueuing ${res.tracks[0].title}**`
-          );
-          m.edit(embedtrack);
-          if (!player.playing) player.play();
-        })
-        .catch((err) => {
-          const embed = new RichEmbed().setDescription(err.message);
-          m.send(embed);
-          if (!player.playing) player.destroy();
-        });
     });
   },
 };
