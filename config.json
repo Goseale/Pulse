@@ -10,7 +10,7 @@
     "other": "#666666",
     "gold": "#fcba03"
   },
-  "radio": [{ "name": "OnlyHitUS", "url": "https://www.twitch.tv/onlyhitus" }],
+  "radio": [{ "name": "onlyhitus", "url": "https://www.twitch.tv/onlyhitus" }],
   "nodes": [
     {
       "host": "localhost",
