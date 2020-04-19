@@ -254,10 +254,10 @@ client.on("guildMemberAdd", (member) => {
     const embed = new Discord.RichEmbed()
       .setColor(client.other)
       .setTitle(
-        `Welcome to **Pulse Support Server**, ${m.user.username}#${m.user.discriminator}`
+        `Welcome to **Pulse Support Server**, ${member.user.username}#${member.user.discriminator}`
       )
       .setDescription(
-        `Welcome to the server, <@!${m.user.id}>. \nIf you wish to invite the bot [You can click here](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\nTo use the bot type \`p!help\` inside <#700963901897965656>`
+        `Welcome to the server, <@!${member.user.id}>. \nIf you wish to invite the bot [You can click here](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728)\nTo use the bot type \`p!help\` inside <#700963901897965656>`
       )
       .setThumbnail(member.user.avatarURL);
     client.channels.get("700963901529128975").send(embed);
