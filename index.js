@@ -65,10 +65,14 @@ client.on("ready", () => {
       player.textChannel.send(embed);
       return client.music.players.destroy(player.guild.id);
     })
-    .on("trackStart", ({ textChannel }, { title, duration }) => {
+    .on("trackStart", ({ textChannel }, { title, duration, isStream }) => {
       const embed = new Discord.RichEmbed()
         .setTitle("Now Playing:")
-        .setDescription(`**${title}** \`${Utils.formatTime(duration, true)}\``);
+        .setDescription(
+          `**${title}**${
+            !isStream ? `\`${Utils.formatTime(duration, true)}\`` : ``
+          }`
+        );
       textChannel.send(embed);
     });
 
