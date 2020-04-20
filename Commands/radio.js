@@ -86,7 +86,6 @@ module.exports = {
       );
 
       collector.on("collect", (me) => {
-        console.log("a");
         if (/cancel/i.test(me.content)) return collector.stop("cancelled");
 
         collector.stop("success");
