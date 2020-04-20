@@ -104,7 +104,7 @@ module.exports = {
               } votes required.**`
             )
             .setFooter("Vote closes within the next 30 secconds.");
-          await message.channel.send(voteembed).then((m) => {
+          message.channel.send(voteembed).then((m) => {
           m.react("✅");
 
           const filter = (reaction, user) =>
