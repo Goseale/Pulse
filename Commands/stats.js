@@ -19,7 +19,7 @@ const { Utils } = require("erela.js");
 
 module.exports = {
   name: "stats",
-  aliases: ["stat", "status", "statistics", "botinfo", "botstats"],
+  aliases: ["stat", "status", "statistics", "botinfo", "botstats", "uptime"],
   usage: "",
   description: "Displays the current statistics of Pulse.",
   needperms: [],
