@@ -126,7 +126,6 @@ module.exports = {
                       );
                       m.edit(embedtrack);
                       if (!player.playing) player.play();
-                      break;
                     }
                   });
                 });
@@ -141,8 +140,8 @@ module.exports = {
                 );
                 m.edit(embedtrack);
                 if (!player.playing) player.play();
-                break;
               }
+              break;
             case "SEARCH_RESULT":
               let index = 1;
               const tracks = res.tracks.slice(0, 5);
@@ -261,7 +260,6 @@ module.exports = {
                       );
                       m.edit(embedplaylist);
                       if (!player.playing) player.play();
-                      break;
                     }
                   });
                 });
@@ -278,8 +276,8 @@ module.exports = {
                 );
                 m.edit(embedplaylist);
                 if (!player.playing) player.play();
-                break;
               }
+              break;
           }
         })
         .catch((err) => {
