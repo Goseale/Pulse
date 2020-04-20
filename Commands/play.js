@@ -63,17 +63,86 @@ module.exports = {
         .then(async (res) => {
           switch (res.loadType) {
             case "TRACK_LOADED":
-              player.queue.add(res.tracks[0]);
-              const embedtrack = new RichEmbed().setTitle(
-                `**Enqueuing ${res.tracks[0].title}${
-                  !res.tracks[0].isStream
-                    ? ` \`${Utils.formatTime(res.tracks[0].duration, true)}\``
-                    : ``
-                }**`
-              );
-              m.edit(embedtrack);
-              if (!player.playing) player.play();
-              break;
+              if (
+                player.voiceChannel.members.filter((n) => !n.user.bot).size >=
+                  3 &&
+                !message.member.hasPermission("MANAGE_CHANNELS") &&
+                res.isStream
+              ) {
+                let voteCount = 0;
+                const voteembed = new RichEmbed()
+                  .setAuthor("Add Livestream?", message.author.displayAvatarURL)
+                  .setDescription(
+                    `A vote is required to add livestreams. **${
+                      player.voiceChannel.members.filter((n) => !n.user.bot)
+                        .size - 1
+                    } votes required.**`
+                  )
+                  .setFooter("Vote closes within the next 30 secconds.");
+                await message.channel.send(voteembed).then((m) => {
+                  m.react("✅");
+
+                  const filter = (reaction, user) =>
+                    reaction.emoji.name === "✅" &&
+                    Array.from(
+                      player.voiceChannel.members
+                        .filter((n) => !n.user.bot)
+                        .map((m) => m.id)
+                    ).includes(user.id);
+                  const collector = m.createReactionCollector(filter, {
+                    time: 30000,
+                  });
+
+                  collector.on("collect", () => {
+                    voteCount++;
+                    if (
+                      voteCount >=
+                      player.voiceChannel.members.filter((n) => !n.user.bot)
+                        .size -
+                        1
+                    )
+                      return collector.stop("success");
+                  });
+                  collector.on("remove", () => {
+                    voteCount--;
+                  });
+                  collector.on("end", (_, reason) => {
+                    if (reason == "time") {
+                      const embed = new RichEmbed().setDescription(
+                        "Vote failed."
+                      );
+                      return message.channel.send(embed);
+                    } else {
+                      player.queue.add(res.tracks[0]);
+                      const embedtrack = new RichEmbed().setTitle(
+                        `**Enqueuing ${res.tracks[0].title}${
+                          !res.tracks[0].isStream
+                            ? ` \`${Utils.formatTime(
+                                res.tracks[0].duration,
+                                true
+                              )}\``
+                            : ``
+                        }**`
+                      );
+                      m.edit(embedtrack);
+                      if (!player.playing) player.play();
+                      break;
+                    }
+                  });
+                });
+              } else {
+                player.queue.add(res.tracks[0]);
+                const embedtrack = new RichEmbed().setTitle(
+                  `**Enqueuing ${res.tracks[0].title}${
+                    !res.tracks[0].isStream
+                      ? ` \`${Utils.formatTime(res.tracks[0].duration, true)}\``
+                      : ``
+                  }**`
+                );
+                m.edit(embedtrack);
+                if (!player.playing) player.play();
+                break;
+              }
             case "SEARCH_RESULT":
               let index = 1;
               const tracks = res.tracks.slice(0, 5);
@@ -129,19 +198,88 @@ module.exports = {
               break;
 
             case "PLAYLIST_LOADED":
-              res.playlist.tracks.forEach((track) => player.queue.add(track));
-              const duration = Utils.formatTime(
-                res.playlist.tracks.reduce((acc, cur) => ({
-                  duration: acc.duration + cur.duration,
-                })).duration,
-                true
-              );
-              const embedplaylist = new RichEmbed().setTitle(
-                `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
-              );
-              m.edit(embedplaylist);
-              if (!player.playing) player.play();
-              break;
+              if (
+                player.voiceChannel.members.filter((n) => !n.user.bot).size >=
+                  3 &&
+                !message.member.hasPermission("MANAGE_CHANNELS")
+              ) {
+                let voteCount = 0;
+                const voteembed = new RichEmbed()
+                  .setAuthor("Add Playlist?", message.author.displayAvatarURL)
+                  .setDescription(
+                    `A vote is required to add playlists. **${
+                      player.voiceChannel.members.filter((n) => !n.user.bot)
+                        .size - 1
+                    } votes required.**`
+                  )
+                  .setFooter("Vote closes within the next 30 secconds.");
+                await message.channel.send(voteembed).then((m) => {
+                  m.react("✅");
+
+                  const filter = (reaction, user) =>
+                    reaction.emoji.name === "✅" &&
+                    Array.from(
+                      player.voiceChannel.members
+                        .filter((n) => !n.user.bot)
+                        .map((m) => m.id)
+                    ).includes(user.id);
+                  const collector = m.createReactionCollector(filter, {
+                    time: 30000,
+                  });
+
+                  collector.on("collect", () => {
+                    voteCount++;
+                    if (
+                      voteCount >=
+                      player.voiceChannel.members.filter((n) => !n.user.bot)
+                        .size -
+                        1
+                    )
+                      return collector.stop("success");
+                  });
+                  collector.on("remove", () => {
+                    voteCount--;
+                  });
+                  collector.on("end", (_, reason) => {
+                    if (reason == "time") {
+                      const embed = new RichEmbed().setDescription(
+                        "Vote failed."
+                      );
+                      return message.channel.send(embed);
+                    } else {
+                      res.playlist.tracks.forEach((track) =>
+                        player.queue.add(track)
+                      );
+                      const duration = Utils.formatTime(
+                        res.playlist.tracks.reduce((acc, cur) => ({
+                          duration: acc.duration + cur.duration,
+                        })).duration,
+                        true
+                      );
+                      const embedplaylist = new RichEmbed().setTitle(
+                        `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
+                      );
+                      m.edit(embedplaylist);
+                      if (!player.playing) player.play();
+                      break;
+                    }
+                  });
+                });
+              } else {
+                res.playlist.tracks.forEach((track) => player.queue.add(track));
+                const duration = Utils.formatTime(
+                  res.playlist.tracks.reduce((acc, cur) => ({
+                    duration: acc.duration + cur.duration,
+                  })).duration,
+                  true
+                );
+                const embedplaylist = new RichEmbed().setTitle(
+                  `**\`${res.playlist.tracks.length}\` \`${duration}\` tracks in playlist \`${res.playlist.info.name}\`**`
+                );
+                m.edit(embedplaylist);
+                if (!player.playing) player.play();
+                break;
+              }
           }
         })
         .catch((err) => {

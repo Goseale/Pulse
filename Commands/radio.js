@@ -89,39 +89,89 @@ module.exports = {
         console.log("a");
         if (/cancel/i.test(me.content)) return collector.stop("cancelled");
 
-        require("../config.json").radio.find(
-          (station) =>
-            station.name &&
-            station.name.toLowerCase() === me.content.toLowerCase()
-        );
+        collector.stop("success");
 
-        const loadembed = new RichEmbed().setDescription("Loading Track...");
+        if (
+          player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3 &&
+          !message.member.hasPermission("MANAGE_CHANNELS")
+        ) {
+          let voteCount = 0;
+          const voteembed = new RichEmbed()
+            .setAuthor("Add Station?", message.author.displayAvatarURL)
+            .setDescription(
+              `A vote is required to add a station. **${
+                player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+              } votes required.**`
+            )
+            .setFooter("Vote closes within the next 30 secconds.");
+          await message.channel.send(voteembed).then((m) => {
+          m.react("✅");
 
-        m.edit(loadembed);
-        client.music
-          .search(
-            require("../config.json").radio.find(
-              (station) =>
-                station.name &&
-                station.name.toLowerCase() === me.content.toLowerCase()
-            ).url,
-            message.author
-          )
-          .then(async (res) => {
-            player.queue.add(res.tracks[0]);
-            const embedtrack = new RichEmbed().setTitle(
-              `**Enqueuing ${res.tracks[0].title}**`
-            );
-            m.edit(embedtrack);
-            if (!player.playing) player.play();
-          })
-          .catch((err) => {
-            const embed = new RichEmbed().setDescription(err.message);
-            m.send(embed);
-            if (!player.playing) player.destroy();
+          const filter = (reaction, user) =>
+            reaction.emoji.name === "✅" &&
+            Array.from(
+              player.voiceChannel.members
+                .filter((n) => !n.user.bot)
+                .map((m) => m.id)
+            ).includes(user.id);
+          const collector = m.createReactionCollector(filter, {
+            time: 30000,
           });
 
-        return collector.stop("success");
+          collector.on("collect", () => {
+            voteCount++;
+            if (
+              voteCount >=
+              player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
+            )
+              return collector.stop("success");
+          });
+          collector.on("remove", () => {
+            voteCount--;
+          });
+          collector.on("end", (_, reason) => {
+            if (reason == "time") {
+              const embed = new RichEmbed().setDescription("Vote failed.");
+              return message.channel.send(embed);
+            } else {
+              const embed = new RichEmbed().setDescription(
+                `Player is now ${
+                  args[0].toLowerCase() == "track"
+                    ? `${player.trackRepeat ? `repeating` : `not repeating`}`
+                    : `${player.queueRepeat ? `repeating` : `not repeating`}`
+                } the ${args[0].toLowerCase()}.`
+              );
+              return message.channel.send(embed);
+            }
+          });
+          });
+        } else {
+          const loadembed = new RichEmbed().setDescription("Loading Track...");
+
+          m.edit(loadembed);
+          client.music
+            .search(
+              require("../config.json").radio.find(
+                (station) =>
+                  station.name &&
+                  station.name.toLowerCase() === me.content.toLowerCase()
+              ).url,
+              message.author
+            )
+            .then(async (res) => {
+              player.queue.add(res.tracks[0]);
+              const embedtrack = new RichEmbed().setTitle(
+                `**Enqueuing ${res.tracks[0].title}**`
+              );
+              m.edit(embedtrack);
+              if (!player.playing) player.play();
+            })
+            .catch((err) => {
+              const embed = new RichEmbed().setDescription(err.message);
+              m.send(embed);
+              if (!player.playing) player.destroy();
+            });
+        }
       });
       collector.on("end", (_, reason) => {
         if (["time", "cancelled"].includes(reason)) {
