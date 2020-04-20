@@ -41,13 +41,19 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (client.music.players.get(message.guild.id))
-      if (voiceChannel.id !== player.voiceChannel.id) {
-        const embed = new RichEmbed().setDescription(
-          "You need to be in the same voice channel to play music."
-        );
-        return message.channel.send(embed);
-      }
+    const player = client.music.players.spawn({
+      guild: message.guild,
+      textChannel: message.channel,
+      voiceChannel,
+      selfDeaf: true,
+    });
+
+    if (voiceChannel.id !== player.voiceChannel.id) {
+      const embed = new RichEmbed().setDescription(
+        "You need to be in the same voice channel to play music."
+      );
+      return message.channel.send(embed);
+    }
 
     const loadembed = new RichEmbed().setDescription("Loading Track...");
 
@@ -57,12 +63,6 @@ module.exports = {
         .then(async (res) => {
           switch (res.loadType) {
             case "TRACK_LOADED":
-              const player = client.music.players.spawn({
-                guild: message.guild,
-                textChannel: message.channel,
-                voiceChannel,
-                selfDeaf: true,
-              });
               player.queue.add(res.tracks[0]);
               const embedtrack = new RichEmbed().setTitle(
                 `**Enqueuing ${res.tracks[0].title}${
@@ -107,12 +107,6 @@ module.exports = {
                 if (/cancel/i.test(me.content))
                   return collector.stop("cancelled");
                 const track = tracks[Number(me.content) - 1];
-                const player = client.music.players.spawn({
-                  guild: message.guild,
-                  textChannel: message.channel,
-                  voiceChannel,
-                  selfDeaf: true,
-                });
                 player.queue.add(track);
                 const embedcollect = new RichEmbed().setTitle(
                   `**Enqueuing ${track.title} \`${Utils.formatTime(
@@ -135,12 +129,6 @@ module.exports = {
               break;
 
             case "PLAYLIST_LOADED":
-              const player = client.music.players.spawn({
-                guild: message.guild,
-                textChannel: message.channel,
-                voiceChannel,
-                selfDeaf: true,
-              });
               res.playlist.tracks.forEach((track) => player.queue.add(track));
               const duration = Utils.formatTime(
                 res.playlist.tracks.reduce((acc, cur) => ({
@@ -159,9 +147,7 @@ module.exports = {
         .catch((err) => {
           const embed = new RichEmbed().setDescription(err.message);
           m.send(embed);
-          if (client.music.players.get(message.guild.id))
-            if (!client.music.players.get(message.guild.id).playing)
-              client.music.players.get(message.guild.id).destroy();
+          if (!player.playing) player.destroy();
         });
     });
   },
