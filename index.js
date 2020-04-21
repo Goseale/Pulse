@@ -70,7 +70,7 @@ client.on("ready", () => {
         .setTitle("Now Playing:")
         .setDescription(
           `**${title}**${
-            !isStream ? `\`${Utils.formatTime(duration, true)}\`` : ``
+            !isStream ? ` \`${Utils.formatTime(duration, true)}\`` : ``
           }`
         );
       textChannel.send(embed);

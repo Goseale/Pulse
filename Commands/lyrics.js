@@ -42,7 +42,9 @@ module.exports = {
     if (args[0]) {
       search = args.join(" ");
     } else {
-      search = player.queue[0].title;
+      if (!player.queue[0].isStream) {
+        search = player.queue[0].title;
+      }
     }
 
     try {
