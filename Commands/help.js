@@ -23,17 +23,17 @@ module.exports = {
   description: "Displays a list of commands for this bot.",
   needperms: [],
   permissions: [],
-  execute(message, args, client) {
+  async execute(message, args, client) {
+    let prefix = require("../config.json").settings.prefix;
+    let fetched = await db.fetch(`prefix_${message.gulid.id}`);
+    if (fetched == null) prefix = require("../config.json").settings.prefix;
+    else prefix = fetched;
+
     if (!args[0]) {
       const embed = new RichEmbed().setDescription(
         "Commands:\n```asciidoc\n" +
           client.commands
-            .map(
-              (m) =>
-                `== ${require("../config.json").settings.prefix + m.name}\n${
-                  m.description
-                }`
-            )
+            .map((m) => `== ${prefix + m.name}\n${m.description}`)
             .join("\n") +
           "```"
       );
@@ -63,9 +63,7 @@ module.exports = {
 
       if (checkcmd) {
         const embed = new RichEmbed()
-          .setTitle(
-            `${require("../config.json").settings.prefix}${checkcmd.name}`
-          )
+          .setTitle(`${prefix}${checkcmd.name}`)
           .setDescription(`${checkcmd.description}`)
           .addField(
             "Usage:",
@@ -101,10 +99,7 @@ module.exports = {
         message.channel.send(embed);
       } else {
         const embed = new RichEmbed().setDescription(
-          "Unable to find command `" +
-            require("../config.json").settings.prefix +
-            args[0].toLowerCase() +
-            "`."
+          "Unable to find command `" + prefix + args[0].toLowerCase() + "`."
         );
 
         message.channel.send(embed);
