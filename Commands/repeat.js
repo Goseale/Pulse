@@ -51,22 +51,6 @@ module.exports = {
       return message.channel.send(embed);
     }
 
-    if (args[1]) result = args[1] == "on";
-
-    if (args[0].toLowerCase() == "track") {
-      if (!args[1]) {
-        player.trackRepeat = !player.trackRepeat;
-      } else {
-        player.trackRepeat = result;
-      }
-    } else {
-      if (!args[1]) {
-        player.queueRepeat = !player.trackRepeat;
-      } else {
-        player.queueRepeat = result;
-      }
-    }
-
     if (
       player.voiceChannel.members.filter((n) => !n.user.bot).size >= 3 &&
       !message.member.hasPermission("MANAGE_CHANNELS")
@@ -110,6 +94,21 @@ module.exports = {
             const embed = new RichEmbed().setDescription("Vote failed.");
             return message.channel.send(embed);
           } else {
+            if (args[1]) result = args[1] == "on";
+
+            if (args[0].toLowerCase() == "track") {
+              if (!args[1]) {
+                player.setTrackRepeat = !player.trackRepeat;
+              } else {
+                player.setTrackRepeat = result;
+              }
+            } else {
+              if (!args[1]) {
+                player.setQueueRepeat = !player.queueRepeat;
+              } else {
+                player.setQueueRepeat = result;
+              }
+            }
             const embed = new RichEmbed().setDescription(
               `Player is now ${
                 args[0].toLowerCase() == "track"
@@ -122,6 +121,21 @@ module.exports = {
         });
       });
     } else {
+      if (args[1]) result = args[1] == "on";
+
+      if (args[0].toLowerCase() == "track") {
+        if (!args[1]) {
+          player.setTrackRepeat = !player.trackRepeat;
+        } else {
+          player.setTrackRepeat = result;
+        }
+      } else {
+        if (!args[1]) {
+          player.setQueueRepeat = !player.queueRepeat;
+        } else {
+          player.setQueueRepeat = result;
+        }
+      }
       const embed = new RichEmbed().setDescription(
         `Player is now ${
           args[0].toLowerCase() == "track"
