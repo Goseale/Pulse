@@ -15,7 +15,6 @@
 //
 
 const { RichEmbed } = require("discord.js");
-const git = require("simple-git/promise");
 const cp = require("child_process");
 
 module.exports = {
