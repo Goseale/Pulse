@@ -21,7 +21,6 @@ const { ErelaClient, Utils } = require("erela.js");
 const { nodes } = require("./config.json");
 const DBL = require("dblapi.js");
 const dbl = new DBL(require("./secret.json").dbltoken, client);
-const db = require("quick.db");
 
 const commandFiles = fs
   .readdirSync("./Commands")
@@ -127,7 +126,7 @@ client.on("ready", () => {
   }, 30000);
 });
 
-client.on("message", async (message) => {
+client.on("message", (message) => {
   if (
     require("./config.json").settings.developers.includes(message.author.id) &&
     message.content.startsWith(require("./config.json").settings.devprefix)
@@ -205,19 +204,16 @@ client.on("message", async (message) => {
     }
   }
 
-  let prefix = require("./config.json").settings.prefix;
-  let fetched = await db.fetch(`prefix_${message.gulid.id}`);
-  if (fetched == null) prefix = require("./config.json").settings.prefix;
-  else prefix = fetched;
-
   if (
-    !message.content.startsWith(prefix) ||
+    !message.content.startsWith(require("./config.json").settings.prefix) ||
     message.author.bot ||
     message.channel.type !== "text"
   )
     return;
 
-  const args = message.content.slice(prefix.length).split(/ +/);
+  const args = message.content
+    .slice(require("./config.json").settings.prefix.length)
+    .split(/ +/);
   const command = args.shift().toLowerCase();
   const checkcmd =
     client.commands.get(command) ||
