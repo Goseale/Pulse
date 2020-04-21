@@ -18,10 +18,10 @@ const { RichEmbed } = require("discord.js");
 const { Utils } = require("erela.js");
 
 module.exports = {
-  name: "radio",
-  aliases: ["playradio", "ra", "station"],
+  name: "station",
+  aliases: ["playradio", "ra", "radio", "playstation", "ps", "pr"],
   usage: "",
-  description: "Choose a radio station to add to the song queue.",
+  description: "Choose a station to add to the song queue.",
   needperms: ["CONNECT", "SPEAK"],
   permissions: [],
   execute(message, args, client) {
@@ -29,7 +29,7 @@ module.exports = {
 
     if (!voiceChannel) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to play a radio station."
+        "You need to be in a voice channel to play a station."
       );
       return message.channel.send(embed);
     }
@@ -43,7 +43,7 @@ module.exports = {
 
     if (voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in the same voice channel to play a radio station."
+        "You need to be in the same voice channel to play a station."
       );
       return message.channel.send(embed);
     }
@@ -51,7 +51,7 @@ module.exports = {
     const embed = new RichEmbed()
       .setAuthor("Station Selection.", message.author.displayAvatarURL)
       .setDescription(
-        `Available Radio Stations:\n\`\`\`${require("../config.json")
+        `Available Stations:\n\`\`\`${require("../config.json")
           .radio.map((m) => m.name)
           .join(", ")}\`\`\``
       )

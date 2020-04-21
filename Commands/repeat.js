@@ -21,8 +21,7 @@ module.exports = {
   name: "repeat",
   aliases: ["r", "loop"],
   usage: "<type> [on/off]",
-  description:
-    "Makes the bot repeat/stop repeating the music currently playing.",
+  description: "Makes the bot repeat/stop repeating the player.",
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
@@ -37,7 +36,9 @@ module.exports = {
     }
     if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to repeat music."
+        `You need to be ${
+          !voiceChannel ? `in a voice channel` : `in the same voice channel`
+        } to repeat the player.`
       );
       return message.channel.send(embed);
     }
@@ -57,7 +58,7 @@ module.exports = {
     ) {
       let voteCount = 0;
       const voteembed = new RichEmbed()
-        .setAuthor("Repeat Music?", message.author.displayAvatarURL)
+        .setAuthor("Repeat Player?", message.author.displayAvatarURL)
         .setDescription(
           `A vote is required to repeat the ${args[0].toLowerCase()}. **${
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1

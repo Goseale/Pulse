@@ -18,10 +18,10 @@ const { RichEmbed } = require("discord.js");
 const { Utils } = require("erela.js");
 
 module.exports = {
-  name: "pause",
-  aliases: ["resume"],
+  name: "clear",
+  aliases: ["c", "cl"],
   usage: "",
-  description: "Makes the bot pause/resume the music currently playing.",
+  description: "Clears the current queue.",
   needperms: [],
   permissions: [],
   async execute(message, args, client) {
@@ -38,7 +38,7 @@ module.exports = {
       const embed = new RichEmbed().setDescription(
         `You need to be ${
           !voiceChannel ? `in a voice channel` : `in the same voice channel`
-        } to pause the player.`
+        } to clear the queue.`
       );
       return message.channel.send(embed);
     }
@@ -49,9 +49,9 @@ module.exports = {
     ) {
       let voteCount = 0;
       const voteembed = new RichEmbed()
-        .setAuthor("Pause Player?", message.author.displayAvatarURL)
+        .setAuthor("Clear Queue?", message.author.displayAvatarURL)
         .setDescription(
-          `A vote is required to pause the player. **${
+          `A vote is required to clear the queue. **${
             player.voiceChannel.members.filter((n) => !n.user.bot).size - 1
           } votes required.**`
         )
@@ -86,18 +86,18 @@ module.exports = {
             const embed = new RichEmbed().setDescription("Vote failed.");
             return message.channel.send(embed);
           } else {
-            player.pause(player.playing);
+            player.queue.clear();
             const embed = new RichEmbed().setDescription(
-              `Player is now ${player.playing ? "resumed" : "paused"}.`
+              `Successfully cleared the queue.`
             );
             return message.channel.send(embed);
           }
         });
       });
     } else {
-      player.pause(player.playing);
+      player.queue.clear();
       const embed = new RichEmbed().setDescription(
-        `Player is now ${player.playing ? "resumed" : "paused"}.`
+        `Successfully cleared the queue.`
       );
       return message.channel.send(embed);
     }

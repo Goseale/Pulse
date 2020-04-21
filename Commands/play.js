@@ -29,14 +29,14 @@ module.exports = {
     const { voiceChannel } = message.member;
     if (!voiceChannel) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to play music."
+        "You need to be in a voice channel to play a track."
       );
       return message.channel.send(embed);
     }
 
     if (!args[0]) {
       const embed = new RichEmbed().setDescription(
-        "Please provide a song name or link to search."
+        "Please provide a track name or link to search."
       );
       return message.channel.send(embed);
     }
@@ -50,7 +50,7 @@ module.exports = {
 
     if (voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in the same voice channel to play music."
+        "You need to be in the same voice channel to play a track."
       );
       return message.channel.send(embed);
     }
@@ -146,7 +146,7 @@ module.exports = {
               let index = 1;
               const tracks = res.tracks.slice(0, 5);
               const embedsearch = new RichEmbed()
-                .setAuthor("Song Selection.", message.author.displayAvatarURL)
+                .setAuthor("Track Selection.", message.author.displayAvatarURL)
                 .setDescription(
                   tracks.map((video) => `**${index++} -** ${video.title}`)
                 )

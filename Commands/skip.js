@@ -36,7 +36,9 @@ module.exports = {
     }
     if (!voiceChannel || voiceChannel.id !== player.voiceChannel.id) {
       const embed = new RichEmbed().setDescription(
-        "You need to be in a voice channel to skip tracks."
+        `You need to be ${
+          !voiceChannel ? `in a voice channel` : `in the same voice channel`
+        } to skip the track.`
       );
       return message.channel.send(embed);
     }
