@@ -29,6 +29,7 @@ module.exports = {
       .setDescription(`**Pulse**\n*Created by Proximitynow and G3V*`)
       .addField(`Guilds`, `${client.guilds.size}`, true)
       .addField(`Users`, `${client.users.size}`, true)
+      .addField(`Memory usage:`, `${process.memoryUsage().heapUsed / 1024 / 1024;}`, true)
       .addField(`Voice Connections`, `${client.music.players.size}`)
       .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`)
       .addField(
