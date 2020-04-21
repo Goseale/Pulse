@@ -10,6 +10,7 @@
     "erela.js": "^1.1.7",
     "fs": "0.0.1-security",
     "node-fetch": "^2.6.0",
+    "simple-git": "^1.132.0",
     "snekfetch": "^4.0.4"
   },
   "devDependencies": {},
