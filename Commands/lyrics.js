@@ -43,7 +43,14 @@ module.exports = {
       search = args.join(" ");
     } else {
       if (!player.queue[0].isStream) {
-        search = player.queue[0].title;
+        if (args[0]) {
+          search = player.queue[0].title;
+        } else {
+          const embed = new RichEmbed().setDescription(
+            "Please provide a track to search for."
+          );
+          return message.channel.send(embed);
+        }
       }
     }
 
