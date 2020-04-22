@@ -30,7 +30,7 @@ module.exports = {
       .addField(`Guilds`, `${client.guilds.size}`, true)
       .addField(`Users`, `${client.users.size}`, true)
       .addField(`Voice Connections`, `${client.music.players.size}`)
-      .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`, true))
+      .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`))
       .addField(`Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 10) / 10}%`, true)
       .addField(
         `Links`,
