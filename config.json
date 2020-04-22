@@ -15,6 +15,7 @@
     { "name": "Monstercat", "url": "https://www.twitch.tv/monstercat" },
     { "name": "UrbanOrder", "url": "https://www.twitch.tv/urbanorder" },
     { "name": "ChickenFM", "url": "http://78.46.148.53:8000/radio.mp3/;.m3u" },
+    { "name": "Aqua", "url": "https://live.itsaqua.net/" },
     { "name": "NightcoreRadio", "url": "https://www.youtube.com/watch?v=7nuYsK2Mouo" },
     {
       "name": "ChickenFMLizzo",
