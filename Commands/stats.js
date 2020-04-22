@@ -31,7 +31,7 @@ module.exports = {
       .addField(`Users`, `${client.users.size}`, true)
       .addField(`Voice Connections`, `${client.music.players.size}`)
       .addField(`Uptime`, `${Utils.formatTime(client.uptime, true)}`)
-      .addField(`Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 10) / 10}%`, false)
+      .addField(`Usage`, `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024 * 10) / 10}%`, true)
       .addField(
         `Links`,
         `[Invite](https://discordapp.com/oauth2/authorize?client_id=700145482957324289&scope=bot&permissions=3145728) | [Vote](https://top.gg/bot/700145482957324289/vote) | [Support server](http://discord.gg/khFght9)`
