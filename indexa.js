@@ -22,6 +22,11 @@ const { nodes } = require("./config.json");
 const DBL = require("dblapi.js");
 const dbl = new DBL(require("./secret.json").dbltoken, client);
 
+const prefixes = require("./models/prefixes.js");
+
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/prefixes");
+
 const commandFiles = fs
   .readdirSync("./Commands")
   .filter((file) => file.endsWith(".js"));
@@ -126,7 +131,7 @@ client.on("ready", () => {
   }, 30000);
 });
 
-client.on("message", (message) => {
+client.on("message", async (message) => {
   if (
     require("./config.json").settings.developers.includes(message.author.id) &&
     message.content.startsWith(require("./config.json").settings.devprefix)
@@ -204,16 +209,30 @@ client.on("message", (message) => {
     }
   }
 
+  let prefix = require("./config.json").settings.prefix;
+
+  prefixes.findOne({ guild: message.guild.id }, (err, nprefix) => {
+    if (err) console.log(err);
+    if (!nprefix) {
+      const newPrefix = new prefixes({
+        guild: message.guild.id,
+        prefix: require("./config.json").settings.prefix,
+      });
+      newPrefix.save().catch((err) => console.log(err));
+      prefix = require("./config.json").settings.prefix;
+    } else {
+      prefix = nprefix.prefix;
+    }
+  });
+
   if (
-    !message.content.startsWith(require("./config.json").settings.prefix) ||
+    !message.content.startsWith(prefix) ||
     message.author.bot ||
     message.channel.type !== "text"
   )
     return;
 
-  const args = message.content
-    .slice(require("./config.json").settings.prefix.length)
-    .split(/ +/);
+  const args = message.content.slice(prefix.length).split(/ +/);
   const command = args.shift().toLowerCase();
   const checkcmd =
     client.commands.get(command) ||
