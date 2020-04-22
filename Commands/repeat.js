@@ -99,15 +99,15 @@ module.exports = {
 
             if (args[0].toLowerCase() == "track") {
               if (!args[1]) {
-                player.setTrackRepeat = !player.trackRepeat;
+                player.setTrackRepeat(!player.trackRepeat);
               } else {
-                player.setTrackRepeat = result;
+                player.setTrackRepeat(result);
               }
             } else {
               if (!args[1]) {
-                player.setQueueRepeat = !player.queueRepeat;
+                player.setQueueRepeat(!player.queueRepeat);
               } else {
-                player.setQueueRepeat = result;
+                player.setQueueRepeat(result);
               }
             }
             const embed = new RichEmbed().setDescription(
@@ -122,19 +122,17 @@ module.exports = {
         });
       });
     } else {
-      if (args[1]) result = args[1] == "on";
-
       if (args[0].toLowerCase() == "track") {
         if (!args[1]) {
-          player.setTrackRepeat = !player.trackRepeat;
+          player.setTrackRepeat(!player.trackRepeat);
         } else {
-          player.setTrackRepeat = result;
+          player.setTrackRepeat(result);
         }
       } else {
         if (!args[1]) {
-          player.setQueueRepeat = !player.queueRepeat;
+          player.setQueueRepeat(!player.queueRepeat);
         } else {
-          player.setQueueRepeat = result;
+          player.setQueueRepeat(result);
         }
       }
       const embed = new RichEmbed().setDescription(
