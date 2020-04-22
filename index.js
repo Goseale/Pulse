@@ -211,7 +211,7 @@ client.on("message", async (message) => {
 
   let prefix = require("./config.json").settings.prefix;
 
-  prefixes.findOne({ guild: message.guild.id }, (err, prefix) => {
+  prefixes.findOne({ guild: message.guild.id }, (err, nprefix) => {
     if (err) console.log(err);
     if (!nprefix) {
       const newPrefix = new prefixes({
