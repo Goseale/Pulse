@@ -33,6 +33,5 @@ module.exports = {
       prefix: args.join(" "),
     });
     newPrefix.save().catch((err) => console.log(err));
-    prefix = require("./config.json").settings.prefix;
   },
 };
