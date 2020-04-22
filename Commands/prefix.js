@@ -15,7 +15,7 @@
 //
 
 const { RichEmbed } = require("discord.js");
-const prefixes = require("./models/prefixes.js");
+const prefixes = require("../models/prefixes.js");
 
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/prefixes");
